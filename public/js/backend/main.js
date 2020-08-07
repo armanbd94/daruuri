@@ -263,6 +263,7 @@ function store_data(table, url, method) {
                 }
             } else {
                 $.each(data.errors, function (key, value) {
+                    var key = key.split('.').join("_");
                     $('#saveDataForm .form-group').find('.error_' + key).text(value);
                     $("#saveDataForm input[name='" + key + "']").addClass('is-invalid');
                     $("#saveDataForm select#" + key).parent().addClass('is-invalid');
@@ -270,6 +271,8 @@ function store_data(table, url, method) {
                     $("#saveDataForm input[name='" + key + "']").after('<div id="' + key + '" class="error invalid-feedback">' + value + '</div>');
                     $("#saveDataForm select#" + key).parent().after('<div id="' + key + '" class="error invalid-feedback">' + value + '</div>');
                     $("#saveDataForm textarea[name='" + key + "']").after('<div id="' + key + '" class="error invalid-feedback">' + value + '</div>');
+                    $("#saveDataForm table").find("#"+key).addClass('is-invalid');
+                    $("#saveDataForm table").find("#"+key).after('<div id="'+key+'" class="error invalid-feedback">'+value+'</div>');
                 });
             }
         },
@@ -310,6 +313,7 @@ function store_with_image_data(table, url, method, form){
                 }
             } else {
                 $.each(data.errors, function (key, value) {
+                    var key = key.split('.').join("_");
                     $('#saveDataForm .form-group').find('.error_'+key).text(value); 
                     $("#saveDataForm input[name='"+key+"']").addClass('is-invalid');
                     $("#saveDataForm select#" + key).parent().addClass('is-invalid');
@@ -318,6 +322,9 @@ function store_with_image_data(table, url, method, form){
                     $("#saveDataForm input[type='file']#"+key).parent().after('<div id="'+key+'" class="error invalid-feedback">'+value+'</div>');
                     $("#saveDataForm select#" + key).parent().after('<div id="'+key+'" class="error invalid-feedback">'+value+'</div>');
                     $("#saveDataForm textarea[name='"+key+"']").after('<div id="'+key+'" class="error invalid-feedback">'+value+'</div>');
+                    $("#saveDataForm table").find("#"+key).addClass('is-invalid');
+                    $("#saveDataForm table").find("#"+key).after('<div id="'+key+'" class="error invalid-feedback">'+value+'</div>');
+                
                 });
             }
         },

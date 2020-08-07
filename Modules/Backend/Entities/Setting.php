@@ -28,10 +28,12 @@ class Setting extends Model
      */
     public static function set($key, $value = null)
     {
-        $setting = new self();
-        $entry = $setting->where('key', $key)->firstOrFail();
-        $entry->value = $value;
-        $entry->saveOrFail();
+        // $setting = new self();
+        // $entry = $setting->where('key', $key)->firstOrFail();
+        // $entry->value = $value;
+        // $entry->saveOrFail();
+
+        self::updateOrInsert(['key' => $key],['key' => $key,'value' => $value]);
         Config::set('key', $value);
         if (Config::get($key) == $value) {
             return true;

@@ -34,9 +34,9 @@
               spinner:"spinner0",
               editorheight:"800,768,640,600",
               responsiveLevels:"1240,1024,778,480",
-              stopAtSlide:1,
-              stopAfterLoops:0,
-              stopLoop:true,
+              stopLoop: "off",
+              stopAfterLoops: -1,
+              stopAtSlide: -1,
               navigation: {
                 onHoverStop:false,
                 arrows: {

@@ -88,6 +88,7 @@ class BrandController extends BaseController
                 $collection = collect($request->all())->except(['_token','update_id']);
                 $result = $this->model->updateOrInsert(['id' => $request->update_id],$collection->all());
                 if($result){
+                    $this->model->flushCache();
                     $output = $this->success_status();
                 }else{
                     $output = $this->error_status();
@@ -114,6 +115,7 @@ class BrandController extends BaseController
         if($request->ajax()){
             $result = $this->model->find($request->id)->delete();
             if($result){
+                $this->model->flushCache();
                 $output = $this->success_status();
             }else{
                 $output = $this->error_status();
@@ -128,6 +130,7 @@ class BrandController extends BaseController
             try {
                 $result = $this->model->destroy($request->id);
                 if($result){
+                    $this->model->flushCache();
                     $output = $this->success_status();
                 }else{
                     $output = $this->error_status();

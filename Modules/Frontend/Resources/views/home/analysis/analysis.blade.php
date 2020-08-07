@@ -11,7 +11,7 @@
                             <div class="icon-text">
                                 <h5 class="icon-box-title mt-0"> Expert Engineers</h5>
                                 <div class="content">
-                                    <p>Lorem ipsum dolor sitam consect etur adipiscing elit tellus,</p>
+                                    <p>We have expert engineer to repair your phone.</p>
                                 </div>
                             </div>
                         </div>
@@ -29,7 +29,7 @@
                             <div class="icon-text">
                                 <h5 class="icon-box-title mt-0"> On Time Delivery</h5>
                                 <div class="content">
-                                    <p>Lorem ipsum dolor sitam consect etur adipiscing elit tellus,</p>
+                                    <p>We ensure on time delivery to our customer</p>
                                 </div>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                             <div class="icon-text">
                                 <h5 class="icon-box-title mt-0"> Best Technology</h5>
                                 <div class="content">
-                                    <p>Lorem ipsum dolor sitam consect etur adipiscing elit tellus,</p>
+                                    <p>We are using best technologies</p>
                                 </div>
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                             <div class="icon-text">
                                 <h5 class="icon-box-title mt-0">25 Years Exprience </h5>
                                 <div class="content">
-                                    <p>Lorem ipsum dolor sitam consect etur adipiscing elit tellus,</p>
+                                    <p>We have 25 Years experience</p>
                                 </div>
                             </div>
                         </div>

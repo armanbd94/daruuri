@@ -15,7 +15,7 @@ class Phone extends Model
     public const VALIDATION_RULES = [
         'brand_id'     => ['required','integer'],
         'phone_name'   => ['required','string','unique:phones,phone_name'],
-        'status'       => ['required','integer']
+        'status'       => ['required','integer'],
     ];
     public const MESSAGE = [
         'brand_id.required' => 'The brand name field is required',
@@ -103,7 +103,7 @@ class Phone extends Model
         $query = self::with('brand:id,brand_name');
 
         if (!empty($this->brandID)) {
-            $query->where('phones.brand_id', 'like','%'.$this->brandID.'%');
+            $query->where('phones.brand_id', $this->brandID);
         }
         if (!empty($this->phoneName)) {
             $query->where('phones.phone_name', 'like','%'.$this->phoneName.'%');
@@ -157,7 +157,7 @@ class Phone extends Model
     public static function brandWisePhone(int $brand_id){
         return self::toBase()->select('id','phone_name')
                             ->where(['brand_id' => $brand_id,'status'=> 1])
-                            ->orderBy('name','asc')->get();
+                            ->orderBy('phone_name','asc')->get();
     }
     /*******************************************
     * TODO =  End :: Custom Search Data = TODO *

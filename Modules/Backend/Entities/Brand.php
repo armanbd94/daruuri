@@ -145,7 +145,7 @@ class Brand extends Model
 
     public static function allBrands(){
         return Cache::rememberForever(self::CACHE_NAME, function () {
-            return self::toBase()->select('id','brand_name')->where('status',1)->orderBy('name','asc')->get();
+            return self::toBase()->select('id','brand_name')->where('status',1)->orderBy('brand_name','asc')->get();
         });
     }
 

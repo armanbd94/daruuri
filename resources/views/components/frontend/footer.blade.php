@@ -8,20 +8,19 @@
                         <div
                             class="tm-widget tm-widget-contact-info contact-info contact-info-style1  contact-icon-theme-colored1">
                             <div class="thumb">
-                                <img alt="Logo" src="images/logo-wide-white.png">
+                                <img alt="Logo" src="storage/{{LOGO.config('settings.site_logo') }}" style="width: 120px;">
                             </div>
-                            <div class="description">203, Envato Labs, Behind Alis Steet, Melbourne,
-                                Australia.immersion along the information close the loop on focusing</div>
+                            <div class="description">{{config('settings.footer_description') }}</div>
                         </div>
                     </div>
                     <div id="tm_widget_social_list_custom-1"
                         class="split-nav-menu clearfix widget widget-social-list-custom clearfix">
                         <ul
                             class="tm-widget tm-widget-social-list tm-widget-social-list-custom styled-icons  icon-dark  icon-rounded icon-theme-colored1 ">
-                            <li><a class="social-link" href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a class="social-link" href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a class="social-link" href="#"><i class="fa fa-youtube"></i></a></li>
-                            <li><a class="social-link" href="#"><i class="fa fa-instagram"></i></a></li>
+                            <li><a class="social-link" href="{{ config('settings.social_facebook') }}"><i class="fab fa-facebook"></i></a></li>
+                            <li><a class="social-link" href="{{ config('settings.social_twitter') }}"><i class="fab fa-twitter"></i></a></li>
+                            <li><a class="social-link" href="{{ config('settings.social_linkedin') }}"><i class="fab fa-linkedin"></i></a></li>
+                            <li><a class="social-link" href="{{ config('settings.social_instagram') }}"><i class="fab fa-instagram"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -38,7 +37,7 @@
                                 <div class="post-right">
                                     <h6 class="post-title"> <a href="#">Email </a> </h6>
                                     <span class="post-date">
-                                        <time class="entry-date">info@mail.com</time>
+                                        <time class="entry-date">{{ config('settings.email_address') }}</time>
                                     </span>
                                 </div>
                             </article>
@@ -48,8 +47,7 @@
                                 <div class="post-right">
                                     <h6 class="post-title"> <a href="#"> Phone </a> </h6>
                                     <span class="post-date">
-                                        <time class="entry-date" datetime="2019-07-15T06:10:26+00:00">+880 1521
-                                            225 987</time>
+                                        <time class="entry-date">{{ config('settings.contact_number') }}</time>
                                     </span>
                                 </div>
                             </article>
@@ -58,8 +56,7 @@
                                 <div class="post-right">
                                     <h6 class="post-title"> <a href="#"> Address </a> </h6>
                                     <span class="post-date">
-                                        <time class="entry-date" datetime="2019-09-15T06:10:26+00:00">Lorem
-                                            ipsum dollar seum toram nanautu</time>
+                                        <time class="entry-date">{{ config('settings.contact_address') }}</time>
                                     </span>
                                 </div>
                             </article>
@@ -74,18 +71,15 @@
                             Services</h4>
                         <div class="menu-service-nav-menu-container">
                             <ul id="menu-service-nav-menu" class="menu">
-                                <li
+                                @if ($highlighted_services->count())
+                                    @foreach ($highlighted_services as $service)
+                                    <li
                                     class="menu-item menu-item-type-post_type menu-item-object-services menu-item-20545">
-                                    <a href="#">Phone Unlock</a></li>
-                                <li
-                                    class="menu-item menu-item-type-post_type menu-item-object-services menu-item-20546">
-                                    <a href="#">Data Recovery</a></li>
-                                <li
-                                    class="menu-item menu-item-type-post_type menu-item-object-services menu-item-20547">
-                                    <a href="#">Broken Glass Repir</a></li>
-                                <li
-                                    class="menu-item menu-item-type-post_type menu-item-object-services menu-item-20548">
-                                    <a href="#">Network Unlock</a></li>
+                                    <a href="javascript:void(0);">{{$service->service_name}}</a>
+                                </li>
+                                    @endforeach
+                                @endif
+                                
                             </ul>
                         </div>
                     </div>
@@ -123,12 +117,12 @@
                 <div class="row pt-20 pb-20">
                     <div class="col-sm-6">
                         <div class="footer-paragraph">
-                            © 2020. All Rights Reserved Daruuri
+                            © {{date('Y')}}. All Rights Reserved Daruuri
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="footer-paragraph text-right">
-                            Developed By <a href="ereveo.net">Erevo Technology Ltd.</a>
+                            Developed By <a href="https://erevo.net/">Erevo Technology Ltd.</a>
                         </div>
                     </div>
                 </div>

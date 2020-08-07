@@ -23,6 +23,7 @@
                         <x-backend.form.file label="Service Icon" col="col-md-12" name="service_icon" required="required" onchange="loadFile(event,'service-icon')"/>
                         <div class="form-group col-md-12">
                             <img src="svg/upload.svg" class="show-image" id="service-icon" style="width: 80px;">
+                            <input type="hidden" name="old_service_icon" id="old_service_icon">
                         </div>
                     </div>
                 </div>

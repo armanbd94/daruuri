@@ -16,7 +16,7 @@ class Service extends Model
     ********************************/
     public const VALIDATION_RULES = [
         'service_name' => ['required','string','unique:services,service_name'],
-        // 'service_icon' => ['required','image','mimes:svg,png'],
+        'service_icon' => ['required','image','mimes:svg,png'],
         'status'       => ['required','integer']
     ];
     /*******************************
@@ -141,9 +141,9 @@ class Service extends Model
     * TODO =  Begin :: Cache Data = TODO *
     **************************************/
 
-    public static function allBrands(){
+    public static function allServices(){
         return Cache::rememberForever(self::CACHE_NAME, function () {
-            return self::toBase()->select('id','service_name')->where('status',1)->orderBy('name','asc')->get();
+            return self::toBase()->select('id','service_name')->where('status',1)->orderBy('service_name','asc')->get();
         });
     }
 

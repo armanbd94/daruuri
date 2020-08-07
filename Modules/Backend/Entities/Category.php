@@ -142,7 +142,7 @@ class Category extends Model
 
     public static function allCategories(){
         return Cache::rememberForever(self::CACHE_NAME, function () {
-            return self::toBase()->select('id','category_name')->where('status',1)->orderBy('name','asc')->get();
+            return self::toBase()->select('id','category_name','category_slug')->where('status',1)->orderBy('category_name','asc')->get();
         });
     }
 

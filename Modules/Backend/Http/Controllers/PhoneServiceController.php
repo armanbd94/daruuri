@@ -77,9 +77,11 @@ class PhoneServiceController extends BaseController
     public function store(Request $request)
     {
         if($request->ajax()){
+           
             $rules = $this->model::VALIDATION_RULES;
             if(!empty($request->update_id)){
                 $rules['service_name'][2] = 'unique:services,service_name,'.$request->update_id;
+                $rules['service_icon'][0] = 'nullable';
             }
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
@@ -87,21 +89,23 @@ class PhoneServiceController extends BaseController
                     'errors' => $validator->errors()
                 );
             } else {
+                
                 $collection = collect($request->all())->only(['service_name','status']);
-                $service_icon = '';
+                $service_icon = $request->old_service_icon;
                 if($request->hasFile('service_icon')){
                     $service_icon = $this->upload_file($request->file('service_icon'),SERVICE_ICON);
                     if(!empty($request->old_service_icon)){
                         $this->delete_file($request->old_service_icon, SERVICE_ICON);
                     }
                 }
-                $created_at = $modified_at = DATETIME;
-                $collection = $collection->merge(compact('service_icon','created_at'));
-                if(!empty($request->update_id)){
-                    $collection = $collection->merge(compact('modified_at'));
+                $created_at = $updated_at = DATETIME;
+                $collection = $collection->merge(compact('service_icon','updated_at'));
+                if(empty($request->update_id)){
+                    $collection = $collection->merge(compact('created_at'));
                 }
                 $result = $this->model->updateOrInsert(['id' => $request->update_id],$collection->all());
                 if($result){
+                    $this->model->flushCache();
                     $output = $this->success_status();
                 }else{
                     $output = $this->error_status();
@@ -143,8 +147,18 @@ class PhoneServiceController extends BaseController
     {
         if($request->ajax()){
             try {
+                $services = $this->model->toBase()->select('service_icon')->whereIn('id',$request->id)->get();
                 $result = $this->model->destroy($request->id);
                 if($result){
+                    if(!empty($services)){
+                        foreach ($services as $service) {                   
+                            if($service->service_icon != null)
+                            {
+                                $this->delete_file($service->service_icon,SERVICE_ICON);    
+                            }
+                        }
+                    }
+                    $this->model->flushCache();
                     $output = $this->success_status();
                 }else{
                     $output = $this->error_status();

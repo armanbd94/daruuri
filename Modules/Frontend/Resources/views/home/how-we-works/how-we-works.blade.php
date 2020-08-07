@@ -13,8 +13,7 @@ data-tm-bg-img="images/bg/as02.jpg">
                             </h2>
                             <div class="title-seperator-line"></div>
                             <div class="paragraph">
-                                <p>Get Your Project Done In just 4 Steps! Consectetur adipiscing elitt
-                                    elit tellus, luctus pulvinar dapibus leoconsectetur luctus nec.</p>
+                                <p>Get Your Phone Repairing Done In just 4 Steps</p>
                             </div>
                         </div>
                     </div>
@@ -42,7 +41,7 @@ data-tm-bg-img="images/bg/as02.jpg">
                                         <h5 class="title">Damage Device</h5>
                                     </div>
                                     <div class="text-holder">
-                                        <p>Lorem ipsum dolor sit amet adipiscing elit</p>
+                                        <p>Received your damage device</p>
                                     </div>
                                 </div>
                             </div>
@@ -61,7 +60,7 @@ data-tm-bg-img="images/bg/as02.jpg">
                                         <h5 class="title">Handover</h5>
                                     </div>
                                     <div class="text-holder">
-                                        <p>Lorem ipsum dolor sit amet adipiscing elit</p>
+                                        <p>Handover the device to our engineer</p>
                                     </div>
                                 </div>
                             </div>
@@ -81,7 +80,7 @@ data-tm-bg-img="images/bg/as02.jpg">
                                         <h5 class="title">Fast Fixing</h5>
                                     </div>
                                     <div class="text-holder">
-                                        <p>Lorem ipsum dolor sit amet adipiscing pulvinar</p>
+                                        <p>Engineer fix the device as fast as possible</p>
                                     </div>
                                 </div>
                             </div>
@@ -101,7 +100,7 @@ data-tm-bg-img="images/bg/as02.jpg">
                                         <h5 class="title">Delivery</h5>
                                     </div>
                                     <div class="text-holder">
-                                        <p>Lorem ipsum dolor sit amet adipiscing elit</p>
+                                        <p>Deliver the device to our customer on time</p>
                                     </div>
                                 </div>
                             </div>

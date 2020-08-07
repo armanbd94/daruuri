@@ -11,11 +11,21 @@
 |
 */
 
+Route::group(['middleware' => 'xss'], function () {
+    Route::get('/', 'HomeController@index');
+    Route::get('about', 'HomeController@about')->name('about');
+    Route::get('service', 'HomeController@service')->name('service');
+    Route::post('brand-phone-list', 'HomeController@brandWisePhone')->name('brand.phone.list');
+    Route::post('phone-services', 'HomeController@phoneWiseService')->name('phone.services');
+    Route::get('contact', 'ContactController@index')->name('contact');
+    Route::post('send-contact-message', 'ContactController@store')->name('send.contact.message');
+    
+    Route::get('faqs', 'SupportController@faqs')->name('faqs');
+    Route::get('feedback', 'SupportController@feedback')->name('feedback');
+    Route::post('store-feedback', 'SupportController@store')->name('store.feedback');
 
-Route::get('/', 'HomeController@index');
-Route::get('about', 'HomeController@about')->name('about');
-Route::get('service', 'HomeController@service')->name('service');
-Route::get('contact', 'ContactController@index')->name('contact');
-Route::get('support', 'SupportController@index')->name('support');
-Route::post('store-client-review', 'SupportController@store')->name('store.client.review');
+    Route::get('product/{category}', 'ProductController@index')->name('product');
+    Route::post('product/list', 'ProductController@product_list')->name('product.list');
+});
+
 

@@ -3,6 +3,7 @@
 namespace App\View\Components\Frontend;
 
 use Illuminate\View\Component;
+use Modules\Backend\Entities\Brand;
 
 class SearchForm extends Component
 {
@@ -23,6 +24,7 @@ class SearchForm extends Component
      */
     public function render()
     {
-        return view('components.frontend.search-form');
+        $brands = Brand::allBrands();
+        return view('components.frontend.search-form',compact('brands'));
     }
 }

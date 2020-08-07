@@ -1,6 +1,10 @@
 <?php
 define('LOGO','logo/');
 define('SERVICE_ICON','service-icon/');
+define('PRODUCT','product/');
+define('PAGE','page/');
+define('SLIDER','slider/');
+define('SERVICE','service/');
 
 define('TEXT_STATUS',['1' => 'Active','2'=>'In Active']);
 define('BUTTON_STATUS',[

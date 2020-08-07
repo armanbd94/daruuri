@@ -1,19 +1,6 @@
-/*------------------------------------------------------------------
-[Master Stylesheet]
-
-Project:        Refit HTML
-Version:        1.0
-Last change:    02.04.2020
-Primary use:    HTML Template
-Author:         ThemeMascot
-URL:            https://themeforest.net/user/ThemeMascot
--------------------------------------------------------------------*/
-@import url(font-awesome.min.css);
-@import url(font-awesome-animation.min.css);
-@import url(pe-icon-7-stroke.css);
-@import url(elegant-icons.css);
-@import url(icomoon.css);
-@import url(flaticon-set-current-theme.css);
+/*************************
+* * Begin :: style.css **
+**************************/
 @import url("https://fonts.googleapis.com/css?family=Open%20Sans:300,400,500,600,700,800|Poppins:400,500,600,700,800,900");
 
 /*
@@ -14477,11 +14464,11 @@ table th {
   color: #676767;
   border-color: #ddd;
   background-color: #fff;
-  border: 3px solid #222;
-  border-radius: 50%;
+  border: 2px solid #222;
+  /* border-radius: 50%; */
   text-align: center;
-  height: 50px;
-  width: 50px;
+  height: 20px;
+  width: 20px;
   display: table-cell;
   vertical-align: middle;
 }
@@ -21669,7 +21656,7 @@ body .vc_row .tm-stretched-bg-active.vc_column_container .vc_column-inner:before
 }
 
 .widget.widget_archive ul>li,
-.widget.widget_categories ul>li,
+/* .widget.widget_categories ul>li, */
 .widget.widget_pages ul>li,
 .widget.widget_meta ul>li,
 .widget.widget_recent_comments ul>li,
@@ -21680,7 +21667,7 @@ body .vc_row .tm-stretched-bg-active.vc_column_container .vc_column-inner:before
 }
 
 .widget.widget_archive ul>li::before,
-.widget.widget_categories ul>li::before,
+/* .widget.widget_categories ul>li::before, */
 .widget.widget_pages ul>li::before,
 .widget.widget_meta ul>li::before,
 .widget.widget_recent_comments ul>li::before,
@@ -21706,14 +21693,14 @@ body .vc_row .tm-stretched-bg-active.vc_column_container .vc_column-inner:before
 
 .widget.widget_categories ul>li,
 .widget.widget_archive ul>li {
-  padding-left: 24px;
+  /* padding-left: 24px; */
   color: #bbb;
 }
 
-.widget.widget_categories ul>li::before,
+/* .widget.widget_categories ul>li::before,
 .widget.widget_archive ul>li::before {
   content: "\f114";
-}
+} */
 
 .widget.widget_recent_comments ul>li {
   line-height: 1.8;
@@ -21757,6 +21744,7 @@ body .vc_row .tm-stretched-bg-active.vc_column_container .vc_column-inner:before
 }
 
 .widget.widget_nav_menu ul>li::before {
+  font-family: "Font Awesome 5 Free";
   content: "\f105";
   font-size: 14px;
   font-weight: 600;
@@ -39726,3 +39714,6 @@ footer#footer.footer-inverted .widget.widget_recent_entries ul>li {
   flex-flow: row wrap !important;
   justify-content: space-around !important;
 }
+/*************************
+* * End :: style.css **
+**************************/

@@ -271,6 +271,9 @@ $(document).ready(function () {
                 $('#saveDataForm #service_name').val(data.service.service_name);
                 $('#saveDataForm select[name="status"]').val(data.service.status);
                 $('#saveDataForm .selectpicker').selectpicker('refresh');
+                let file = "{{'storage/'.SERVICE_ICON}}"+data.service.service_icon;
+                $('#saveDataForm #service-icon').attr('src',file);
+                $('#saveDataForm #old_service_icon').val(data.service.service_icon);
                 $('#saveDataModal').modal({
                     keyboard: false,
                     backdrop: 'static', //make modal static

@@ -24,7 +24,7 @@
     </div>
     <div class="kt-subheader__toolbar">
         <div class="kt-subheader__wrapper">
-            <button type="button" onclick="show_modal(modal_title='Add New Phone', btn_text='Save')" class="btn btn-brand btn-icon-sm btn-sm">
+            <button type="button" id="showModal" class="btn btn-brand btn-icon-sm btn-sm">
                 <i class="fas fa-plus-square"></i> Add New
             </button>
         </div>
@@ -50,11 +50,23 @@
                 <div class="col-xl-12 order-2 order-xl-1 py-25px">
                     <form method="POST" id="form-filter" class="m-form m-form--fit m--margin-bottom-20">
                         <div class="row">
-                            <div class="col-md-5 mb-3">
-                                <label>Brand Name</label>
-                                <input type="text" class="form-control" name="brand_name" id="brand_name" placeholder="Enter brand name" />
+                            <div class="col-md-3 mb-3">
+                                <label>Phone Name</label>
+                                <input type="text" class="form-control" name="phone_name" id="phone_name" placeholder="Enter phone name" />
                             </div>
-                            <div class="col-md-5 mb-3">
+                            <div class="col-md-3 mb-3">
+                                <label>Brand</label>
+                                <select  class="form-control selectpicker" name="brand_id" id="brand_id" data-live-search="true" data-live-search-placeholder="Search" title="Choose one of the following...">
+                                    <option value="">Select please</option>
+                                    @if (!empty($data['brands']))
+                                    @foreach ($data['brands'] as $brand)
+                                    <option value="{{$brand->id}}">{{$brand->brand_name}}</option>
+                                    @endforeach
+                                    @endif
+                                    
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
                                 <label>Status</label>
                                 <select  class="form-control selectpicker" name="status" id="status" data-live-search="true" data-live-search-placeholder="Search" title="Choose one of the following...">
                                     <option value="">Select please</option>
@@ -63,7 +75,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-2 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <div class="mt-25px">    
                                     <button id="btn-reset" class="btn btn-danger btn-sm btn-elevate btn-icon float-right" type="button"
                                     data-skin="dark" data-toggle="kt-tooltip" data-placement="top" title="" data-original-title="Reset">
@@ -90,7 +102,8 @@
                                     </label>
                                 </th>
                                 <th>SR</th>
-                                <th>Brand Name</th>
+                                <th>Phone</th>
+                                <th>Brand</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -104,7 +117,8 @@
     <!--end::Portlet-->
 
     <!--Begin:: Modal-->
-    @include('backend::brand.modal')
+    @include('backend::phone.modal')
+    @include('backend::phone.show-modal')
     <!--End:: Modal-->
 </div>
 @endsection
@@ -138,10 +152,11 @@ $(document).ready(function () {
 
         // Load data for the table's content from an Ajax source//
         "ajax": {
-            "url": "{{route('admin.brand.list')}}",
+            "url": "{{route('admin.phone.list')}}",
             "type": "POST",
             "data": function (data) {
-                data.brand_name   = $('#form-filter #brand_name').val();
+                data.phone_name   = $('#form-filter #phone_name').val();
+                data.brand_id     = $('#form-filter #brand_id').val();
                 data.status       = $('#form-filter #status').val();
                 data._token       = _token;
             }
@@ -230,9 +245,29 @@ $(document).ready(function () {
     $('#dataTable_wrapper .dt-buttons').append(button);
     /** END:: DATATABLE APPEND DELETE ALL BUTTON  **/
 
+    /** BEGIN:: SHOW ADD/UPDATE MODAL **/
+    $(document).on('click','#showModal',function(){
+        $('#saveDataForm')[0].reset(); //reset form
+        $('#update_id').val(''); //empty id input field
+        $(".error").each(function () {
+            $(this).empty(); //remove error text
+        });
+        $("#saveDataForm").find('.is-invalid').removeClass('is-invalid'); //remover red border color
+        $('#saveDataForm table .price_box').prop('disabled',false);
+        $('#saveDataModal').modal({
+            keyboard: false,
+            backdrop: 'static', //make modal static
+        });
+
+        $('.selectpicker').selectpicker('refresh'); //empty selectpicker field
+        $('.modal-title').html('<i class="fas fa-plus-square"></i> <span>Add New Phone</span>'); //set modal title
+        $('#save-btn').text('Save'); //set save button text
+    });
+    /** END:: SHOW ADD/UPDATE MODAL **/
+
     /** BEGIN:: DATA ADD/UPDATE AJAX CODE **/
     $(document).on('click', '#save-btn',function(event){
-        let url = "{{route('admin.brand.store')}}";
+        let url = "{{route('admin.phone.store')}}";
         let id  = $('#update_id').val();
         let method;
         if(id){
@@ -244,6 +279,29 @@ $(document).ready(function () {
     });
     /** END:: DATA ADD/UPDATE AJAX CODE **/
 
+     //BEGIN: FETCHING VIEW DATA CODE
+     $(document).on('click','.view_data',function () {
+        var id = $(this).data('id');
+        $.ajax({
+            url: "{{route('admin.phone.show')}}",
+            type: "POST",
+            data:{id:id,_token:_token},
+            dataType: "JSON",
+            success: function (data) {
+                $('#showDataModal .modal-body').html(data.phone);
+                $('#showDataModal').modal({
+                    keyboard: false,
+                    backdrop: 'static', //make modal static
+                });
+                $('.modal-title').html('<i class="fas fa-eye"></i> <span>'+data.phone_name+' Data</span>');
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    });
+    //END: FETCHING VIEW DATA CODE
+
     //BEGIN: FETCHING EDIT DATA CODE
     $(document).on('click','.edit_data',function () {
         var id = $(this).data('id');
@@ -253,21 +311,29 @@ $(document).ready(function () {
         });
         $("#saveDataForm").find('.is-invalid').removeClass('is-invalid');//remover red border color
         $('.selectpicker').selectpicker('refresh');
+        $('#saveDataForm table input[type="checkbox"]').prop('checked',false);
+        $('#saveDataForm table .price_box').prop('disabled',true);
         $.ajax({
-            url: "{{route('admin.brand.edit')}}",
+            url: "{{route('admin.phone.edit')}}",
             type: "POST",
             data:{id:id,_token:_token},
             dataType: "JSON",
             success: function (data) {
-                $('#saveDataForm #update_id').val(data.brand.id);
-                $('#saveDataForm #brand_name').val(data.brand.brand_name);
-                $('#saveDataForm select[name="status"]').val(data.brand.status);
+                $('#saveDataForm #update_id').val(data.phone.id);
+                $('#saveDataForm #phone_name').val(data.phone.phone_name);
+                $('#saveDataForm select[name="brand_id"]').val(data.phone.brand_id);
+                $('#saveDataForm select[name="status"]').val(data.phone.status);
                 $('#saveDataForm .selectpicker').selectpicker('refresh');
+                $.each(data.phone.services, function(key, value){
+                    $('#saveDataForm table #'+value.id+'_service').prop('checked',true);
+                    $('#saveDataForm table #service_'+value.id+'_price').val(value.pivot.price);
+                    disable_price(value.id);
+                });
                 $('#saveDataModal').modal({
                     keyboard: false,
                     backdrop: 'static', //make modal static
                 });
-                $('.modal-title').html('<i class="fas fa-edit"></i> <span>Edit '+data.brand.brand_name+' Data</span>');
+                $('.modal-title').html('<i class="fas fa-edit"></i> <span>Edit '+data.phone.phone_name+' Data</span>');
                 $('#save-btn').text('Update');
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -281,7 +347,7 @@ $(document).ready(function () {
     $(document).on('click','.delete_data',function () {
         let row = table.row( $(this).parents('tr') );
         let id  = $(this).data('id');
-        let url = "{{route('admin.brand.delete')}}";
+        let url = "{{route('admin.phone.delete')}}";
         delete_data(table,row,id,url);
     });
     //END: DELETE SINGLE DATA
@@ -304,7 +370,7 @@ $(document).ready(function () {
             });
 
         }else{
-            let url = "{{route('admin.brand.bulkaction')}}";
+            let url = "{{route('admin.phone.bulkaction')}}";
             bulk_action_delete(table,url,id,rows);
         }
     });
@@ -315,5 +381,14 @@ $(document).ready(function () {
     //END: SELECT ALL CHECKBOX CHECKED IF ANY ROW SELECTED CODE
 
 }); 
+
+function disable_price(id)
+{
+    if($("#"+id+"_service").prop("checked") == true){
+        $("#service_"+id+"_price").prop("disabled",false);
+    }else{
+        $("#service_"+id+"_price").prop("disabled",true);
+    }
+}
 </script>
 @endpush

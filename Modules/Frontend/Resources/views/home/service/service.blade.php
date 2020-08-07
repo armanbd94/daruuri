@@ -11,8 +11,7 @@
                                         class="text-theme-colored1">Service</span> Areas</h2>
                                 <div class="title-seperator-line"></div>
                                 <div class="paragraph">
-                                    <p>Explore Our Completed Services! Consectetur adipiscing elitt elit
-                                        tellus, luctus pulvinar dapibus leoconsectetur luctus nec.</p>
+                                    <p>Explore Our Completed Services!</p>
                                 </div>
                             </div>
                         </div>
@@ -22,97 +21,23 @@
         </div>
         <div class="section-content">
             <div class="row">
-
+                @if ($highlighted_services->count())
+                @foreach ($highlighted_services as $service)
                 <div class="col-md-6 col-lg-6 col-xl-4">
                     <div class="services-block mb-50">
                         <div class="inner-box">
                             <div class="thumb">
-                                <img src="images/service/4.jpg" alt="" />
+                                <img src="storage/{{SERVICE.$service->image}}" alt="{{$service->service_name}}" />
                             </div>
                             <div class="content">
-                                <div class='symbol-icon'><img src='images/icon/f4.png' alt='Image' /></div>
-                                <h4><a href="#">Phone Unlock</a></h4>
-                                <p>Leverage agile frameworks to provide a robust synopsis for high level
-                                    overviews.</p>
+                                <h4><a href="javascript:void(0);">{{$service->service_name}}</a></h4>
+                                <p>{{$service->description}}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-6 col-xl-4">
-                    <div class="services-block mb-50">
-                        <div class="inner-box">
-                            <div class="thumb">
-                                <img src="images/service/5.jpg" alt="" />
-                            </div>
-                            <div class="content">
-                                <div class='symbol-icon'><img src='images/icon/f5.png' alt='Image' /></div>
-                                <h4><a href="#">Mobile Repair</a></h4>
-                                <p>Leverage agile frameworks to provide a robust synopsis for high level
-                                    overviews.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xl-4">
-                    <div class="services-block mb-50">
-                        <div class="inner-box">
-                            <div class="thumb">
-                                <img src="images/service/6.jpg" alt="" />
-                            </div>
-                            <div class="content">
-                                <div class='symbol-icon'><img src='images/icon/f6.png' alt='Image' /></div>
-                                <h4><a href="#">Hardware Update</a></h4>
-                                <p>Leverage agile frameworks to provide a robust synopsis for high level
-                                    overviews.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xl-4">
-                    <div class="services-block mb-50">
-                        <div class="inner-box">
-                            <div class="thumb">
-                                <img src="images/service/1.jpg" alt="" />
-                            </div>
-                            <div class="content">
-                                <div class='symbol-icon'><img src='images/icon/f1.png' alt='Image' /></div>
-                                <h4><a href="#">Laptop Repair</a></h4>
-                                <p>Leverage agile frameworks to provide a robust synopsis for high level
-                                    overviews.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xl-4">
-                    <div class="services-block mb-50">
-                        <div class="inner-box">
-                            <div class="thumb">
-                                <img src="images/service/2.jpg" alt="" />
-                            </div>
-                            <div class="content">
-                                <div class='symbol-icon'><img src='images/icon/f2.png' alt='Image' /></div>
-                                <h4><a href="#">Computer Repair</a></h4>
-                                <p>Leverage agile frameworks to provide a robust synopsis for high level
-                                    overviews.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xl-4">
-                    <div class="services-block mb-50">
-                        <div class="inner-box">
-                            <div class="thumb">
-                                <img src="images/service/3.jpg" alt="" />
-                            </div>
-                            <div class="content">
-                                <div class='symbol-icon'><img src='images/icon/f3.png' alt='Image' /></div>
-                                <h4><a href="#">Data Recovery</a></h4>
-                                <p>Leverage agile frameworks to provide a robust synopsis for high level
-                                    overviews.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+                @endif
             </div>
         </div>
     </div>

@@ -6,7 +6,7 @@
                     <div class="tm-sc tm-sc-custom-columns-holder tm-cc-two-columns tm-cc-responsive-mode-1280">
                         <div class="tm-sc tm-sc-custom-columns-holder-item section-typo-light bg-theme-colored2 bg-img-right"
                             data-item-class="bconsul-mascot-custom-columns-479103"
-                            data-tm-bg-img="images/bg/map-bg.png" data-1200-up="70px 10% 70px 10%"
+                            data-1200-up="70px 10% 70px 10%"
                             data-1199-down="90px 10% 90px 10%">
                             <div class="item-inner">
                                 <div class="item-content bconsul-mascot-custom-columns-479103">

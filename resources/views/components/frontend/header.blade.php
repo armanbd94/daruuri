@@ -9,8 +9,8 @@
                             <div class="row header-nav-col-row">
                                 <div class="col-sm-auto align-self-center">
                                     <a class="menuzord-brand site-brand" href="index-mp-layout1.html">
-                                        <img class="logo-default logo-1x" src="" alt="Logo">
-                                        <img class="logo-default logo-2x retina" src="images/logo-wide%402x.png"
+                                        <img class="logo-default logo-1x" src="storage/{{LOGO.config('settings.site_logo') }}" alt="Logo">
+                                        <img class="logo-default logo-2x retina" src="storage/{{LOGO.config('settings.site_logo') }}"
                                             alt="Logo">
                                     </a>
                                 </div>
@@ -18,17 +18,30 @@
                                     <nav id="top-primary-nav" class="menuzord green" data-effect="fade"
                                         data-animation="none" data-align="right">
                                         <ul id="main-nav" class="menuzord-menu">
-                                            <li class="active"><a href="{{url('/')}}">Home</a></li>
-                                            <li><a href="{{route('about')}}">About</a></li>
-                                            <li><a href="javascript:void(0);">Product</a>
+                                            <li class="{{ (request()->is('/')) ? 'active' : '' }}"><a href="{{url('/')}}">Home</a></li>
+                                            <li class="{{ (request()->is('about')) ? 'active' : '' }}"><a href="{{route('about')}}">About</a></li>
+                                            <li class="
+                                            @if ($categories->count())
+                                            @foreach ($categories as $category)
+                                            {{ (request()->is("product/{$category->category_slug}")) ? 'active' : '' }}
+                                            @endforeach @endif"><a href="javascript:void(0);">Product</a>
                                                 <ul class="dropdown">
-                                                    <li><a href="service.html">Product One</a></li>
-                                                    <li><a href="service.html">Product Two</a></li>
+                                                    @if ($categories->count())
+                                                        @foreach ($categories as $category)
+                                                        <li><a href="{{route('product',['category' => $category->category_slug])}}">{{$category->category_name}}</a></li>
+                                                        @endforeach
+                                                    @endif
                                                 </ul>
                                             </li>
-                                            <li><a href="{{route('service')}}">Service</a></li>
-                                            <li><a href="#">Support</a></li>
-                                            <li><a href="{{route('contact')}}">Contact</a></li>
+                                            <li class="{{ (request()->is('service')) ? 'active' : '' }}"><a href="{{route('service')}}">Service</a></li>
+                                            <li  class="{{ (request()->is('faqs')) ? 'active' : '' }} {{ (request()->is('feedback')) ? 'active' : '' }}">
+                                                <a href="javascript:void(0);">Support</a>
+                                                <ul class="dropdown">
+                                                    <li><a href="{{route('faqs')}}">FAQs</a></li>
+                                                    <li><a href="{{route('feedback')}}">Feedback</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="{{ (request()->is('contact')) ? 'active' : '' }}"><a href="{{route('contact')}}">Contact</a></li>
                                         </ul>
                                     </nav>
                                 </div>

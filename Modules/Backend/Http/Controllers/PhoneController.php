@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
 use Modules\Backend\Entities\Phone;
 use Modules\Backend\Entities\Brand;
+use Modules\Backend\Entities\Service;
 use Validator;
 
 class PhoneController extends BaseController
@@ -18,7 +19,9 @@ class PhoneController extends BaseController
     public function index()
     {
         $this->setPageData('Phone','Phone','fas fa-mobile');
-        return view('backend::phone.index');
+        $data['brands'] = Brand::allBrands();
+        $data['services'] = Service::allServices();
+        return view('backend::phone.index',compact('data'));
     }
 
 
@@ -26,8 +29,8 @@ class PhoneController extends BaseController
     {
         if($request->ajax()){
 
-            if(!empty($request->brandID)){
-                $this->model->setBrandID($request->brandID);
+            if(!empty($request->brand_id)){
+                $this->model->setBrandID($request->brand_id);
             }
             if(!empty($request->phone_name)){
                 $this->model->setPhoneName($request->phone_name);
@@ -66,8 +69,8 @@ class PhoneController extends BaseController
                 $row    = array();
                 $row[]  = '<label class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid"><input type="checkbox" name="did[]" value="' . $value->id . '" class="select_data select_item_' . $value->id . '" onchange="select_single_item(' . $value->id . ')">&nbsp;<span></span></label> ';
                 $row[]  = $no;
-                $row[]  = $value->brand->brand_name;
                 $row[]  = $value->phone_name;
+                $row[]  = $value->brand->brand_name;
                 $row[]  = BUTTON_STATUS[$value->status];
                 $row[]  = $btngroup;
                 $data[] = $row;
@@ -82,19 +85,35 @@ class PhoneController extends BaseController
     public function store(Request $request)
     {
         if($request->ajax()){
-            $rules = $this->model::VALIDATION_RULES;
+            $rules   = $this->model::VALIDATION_RULES;
+            $message = $this->model::MESSAGE;
             if(!empty($request->update_id)){
-                $rules['category_name'][2] = 'unique:categories,category_name,'.$request->update_id;
+                $rules['phone_name'][2] = 'unique:phones,phone_name,'.$request->update_id;
             }
-            $validator = Validator::make($request->all(), $rules);
+            $services = [];
+            if($request->has('service')){
+                foreach($request->service as $key => $value)
+                {
+                    $rules['service.'.$key.'.price']              = ['required','numeric','min:1'];
+                    $message['service.'.$key.'.price.required']   = 'The price field is required';
+                    $message['service.'.$key.'.price.numeric']    = 'The price field value must be numeric';
+                    $services[$value['service_id']] = [
+                            'price' => $value['price']
+                    ];
+                }
+                
+            }
+            $validator = Validator::make($request->all(), $rules, $message);
             if ($validator->fails()) {
                 $output = array(
                     'errors' => $validator->errors()
                 );
             } else {
-                $collection = collect($request->all())->except(['_token','update_id']);
-                $result = $this->model->updateOrInsert(['id' => $request->update_id],$collection->all());
+                $collection = collect($request->all())->only(['brand_id','phone_name','status']);
+                $result = $this->model->updateOrCreate(['id' => $request->update_id],$collection->all());
                 if($result){
+                    $phone = $this->model->with('services')->find($result->id);
+                    $phone->services()->sync($services);
                     $output = $this->success_status();
                 }else{
                     $output = $this->error_status();
@@ -104,12 +123,24 @@ class PhoneController extends BaseController
         }
     }
 
+    public function show(Request $request){
+        if($request->ajax()){
+            $phone = $this->model->with(['brand:id,brand_name','services'])->find($request->id);
+            if($phone){
+                $output['phone'] = view('backend::phone.details',compact('phone'))->render();
+                $output['phone_name'] = $phone->phone_name;
+            }else{
+                $output = $this->error_status();
+            }
+            return response()->json($output);
+        }
+    }
 
     public function edit(Request $request){
         if($request->ajax()){
-            $result = $this->model->find($request->id);
+            $result = $this->model->with('services')->find($request->id);
             if($result){
-                $output['category'] = $result;
+                $output['phone'] = $result;
             }else{
                 $output = $this->error_status();
             }
@@ -120,9 +151,15 @@ class PhoneController extends BaseController
     public function destroy(Request $request)
     {
         if($request->ajax()){
-            $result = $this->model->find($request->id)->delete();
-            if($result){
-                $output = $this->success_status();
+            $phone = $this->model->with('services')->find($request->id);
+            if($phone){
+                $delete_services = $phone->services()->detach();
+                if($delete_services){
+                    $phone->delete();
+                    $output = $this->success_status();
+                }else{
+                    $output = $this->error_status();
+                }
             }else{
                 $output = $this->error_status();
             }
@@ -134,12 +171,21 @@ class PhoneController extends BaseController
     {
         if($request->ajax()){
             try {
-                $result = $this->model->destroy($request->id);
-                if($result){
-                    $output = $this->success_status();
-                }else{
-                    $output = $this->error_status();
+                foreach ($request->id as $id) {
+                    $phone = $this->model->with('services')->find($id);
+                    if($phone){
+                        $delete_services = $phone->services()->detach();
+                        if($delete_services){
+                            $phone->delete();
+                            $output = $this->success_status();
+                        }else{
+                            $output = $this->error_status();
+                        }
+                    }else{
+                        $output = $this->error_status();
+                    }
                 }
+                
             } catch (\Throwable $e) {
                 $output = ['status' => 'error','message'=> $e->getMessage()];
             }

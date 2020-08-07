@@ -8,8 +8,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Daruuri') }}</title>
-
+    <title>{{ config('settings.site_title') ?? env('APP_NAME') }} - Login</title>
+	<link rel="shortcut icon" href="storage/{{LOGO.config('settings.site_favicon') }}" />
 
 		<!--begin::Page Custom Styles(used by this page) -->
 		<link href="css/backend/login.css" rel="stylesheet" type="text/css" />
@@ -35,8 +35,8 @@
 					<div class="kt-grid__item kt-grid__item--fluid kt-login__wrapper">
 						<div class="kt-login__container">
 							<div class="kt-login__logo">
-								<a href="#">
-									<img src="./assets/media/logos/logo-5.png">
+								<a href="{{url('admin')}}">
+									<img alt="Logo" src="storage/{{LOGO.config('settings.site_logo') }}" style="width: 150px;" />
 								</a>
 							</div>
 							<div class="kt-login__signin">

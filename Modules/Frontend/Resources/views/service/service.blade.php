@@ -1,9 +1,90 @@
-
-
-
-
-
 @extends('frontend.master')
+
+@section('title')
+    {{$page_title}}
+@endsection
+
+@push('style')
+<link href="css/bootstrap-select.css" rel="stylesheet" type="text/css" />
+<style>
+.bootstrap-select{
+    border-radius: 5px !important;
+}
+#showDataModal .modal-dialog{
+    width: 90% !important;
+    margin: 1.75rem auto;
+}
+.modal-dialog{
+    max-width: 90% !important;
+}
+.services-style-four {
+    padding: 0px 25px;
+    position: relative;
+    margin-bottom: 50px;
+}
+.services-style-four .inner-box {
+    position: relative;
+    padding: 30px 30px 25px;
+    border: 1px solid #e0e0e0;
+}
+.services-style-four .inner-box .icon-box {
+    position: absolute;
+    left: 40%;
+    top: -35px;
+    width: 70px;
+    height: 70px;
+    line-height: 66px;
+    border-radius: 50%;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    background-color: #ffffff;
+}
+@media only screen and (max-width: 325px) {
+    .services-style-four .inner-box .icon-box {
+        left: 35%;
+    }
+}
+@media only screen and (min-width: 326px) {
+    .services-style-four .inner-box .icon-box {
+        left: 40%;
+    }
+}
+
+.services-style-four .inner-box h5 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 15px 0 0 0;
+    text-transform: uppercase;
+}
+.services-style-four .inner-box p {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+}
+
+.service-modal-section{
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999999;
+    padding-top: 50px;
+}
+#service_modal{
+    width: 90vw;
+    margin: 0 auto;
+}
+#close_btn{
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+    cursor: pointer;
+}
+</style>
+@endpush
 
 @section('content')
 <div class="main-content">
@@ -11,42 +92,120 @@
     <!-- Section: Banner -->
     @include('frontend::banner.banner')
 
+    <x-frontend.search-form/>
      <!-- Section: Service -->
     <section>
         <div class="container pb-70">
             <div class="section-content">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 pull-left flip">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img alt="" src="images/bg/bg3.jpg">
+                @if ($services->count())
+                    @foreach ($services as $service)
+                    <div class="row pb-5">
+                        <div class="col-xs-12 col-sm-12 col-md-12 pull-left flip">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <img alt="{{$service->title}}" src="storage/{{PAGE.$service->image}}" style="width: 100%;border: 5px solid #1bacd6;
+                                    box-shadow: 0px 3px 7px rgba(0,0,0,0.5);">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h3 class="mt-20 mb-10">Computer Repair</h3>
-                                <p class="lead">Lorem ipsum dolor sit amet <span class="text-theme-colored1 font-weight-600">Industry</span> adipiscing elit. Etiam aliquet odio non porta laoreet. Vestibulum in dui euismod, molestie quam <span class="text-theme-colored1 font-weight-600">porta</span>, sagittis arcu. Pellentesque vitae pulvinar urna.</p>
-                                <p>Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring natoque sem morbi hac nunc ultricies.</p>
-                                <h5>Porta tellus aliquam ligula sollicitudin</h5>
-                                <p>Ultrices conubia vehicula malesuada. Eros commodo a duis accumsan vestibulum adipiscing hendrerit lobortis viverra non justo?</p>
-                                <ul>
-                                    <li>Lorem ipsum dolor sit amet adipiscing elit.</li>
-                                    <li>Aliquam tincidunt mauris eu risus.</li>
-                                    <li>Vestibulum auctor dapibus neque.</li>
-                                    <li>Habitant aliquam taciti tellus leo class.</li>
-                                    <li>Vitae litora erat penatibus nam lorem</li>
-                                </ul>
-                                <h5>Tincidunt wisi euismod iaculis nunc vita</h5>
-                                <p>Nostra dapibus varius et semper semper rutrum ad risus felis eros. Cursus libero viverra tempus netus diam vestibulum lorem tincidunt congue porta. Non ligula egestas commodo massa. Lorem non sit vivamus convallis elit mollis. Viverra sodales feugiat natoque sem morbi hac nunc ultricies nibh netus facilisis blandit. Felis purus et iaculis. Semper orci duis montes curabitur potenti a varius quis diam, vel litora et? Quis ridiculus pharetra luctus augue duis.</p>
-                                <h5>Parturient tortor tortor sed tellus molestie neque</h5>
-                                <p>Habitasse justo, sed justo. Senectus morbi, fermentum magna id tortor. Lacinia sociis morbi erat ultricies dictumst condimentum dictum nascetur? Vitae litora erat penatibus nam lorem. Euismod tempus, mollis leo tempus? Semper est cursus viverra senectus lectus feugiat id! Odio porta nibh dictumst nulla taciti lacus nam est praesent.</p>
-                                <p>Tincidunt habitant egestas erat lectus congue nisl dapibus nostra bibendum. In est in vitae dictumst varius lorem congue rutrum eget primis augue. At orci cubilia duis orci consequat libero malesuada mi. Porta facilisis dui, justo laoreet penatibus. Eros penatibus justo, tempor ligula vestibulum vestibulum lacus mauris himenaeos quisque proin.</p>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3 class="mt-20 mb-10">{{$service->title}}</h3>
+                                    <p>{{$service->description}}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    @endforeach
+                @endif
+                
             </div>
         </div>
     </section>
+
+    @include('frontend::modal')
 </div>
 @endsection
+
+@push('script')
+ <script src="js/backend/bootstrap-select.js" type="text/javascript"></script>
+ <script type="text/javascript">
+    var _token = "{{csrf_token()}}";
+    $(document).on('change','#phone_id', function(){
+        let phone_id = $("#phone_id").val();
+        if(phone_id){
+            $(".error").each(function () {
+                $(this).empty();//remove error text
+            });
+            $("#searchDataForm").find('.is-invalid').removeClass('is-invalid');
+        }else{
+            $("#phone_id").parent().addClass('is-invalid');
+            $("#phone_id").parent().after('<div class="error invalid-feedback"><i class="icon fas fa-question-circle"></i> Please choose a phone</div>');
+        }       
+    });
+    $(document).on('click','#search-btn', function(){
+        let brand_id = $("#brand_id").val();
+        let phone_id = $("#phone_id").val();
+        if(brand_id){
+            $(".error").each(function () {
+                    $(this).empty();//remove error text
+                });
+                $("#searchDataForm").find('.is-invalid').removeClass('is-invalid');
+            if(phone_id){
+                $(".error").each(function () {
+                    $(this).empty();//remove error text
+                });
+                $("#searchDataForm").find('.is-invalid').removeClass('is-invalid');
+                $.ajax({
+                    url: "{{route('phone.services')}}",
+                    type: "POST",
+                    data:{phone_id:phone_id,_token:_token},
+                    dataType: "JSON",
+                    success: function (data) {
+                        $('.service-modal-section').removeClass('d-none');
+                        $('.service-modal-section .card-body').html('');
+                        $('.service-modal-section .card-body').html(data);
+                        $('.selectpicker').val('').selectpicker('refresh');
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    }
+                });
+            }else{
+                $("#phone_id").parent().addClass('is-invalid');
+                $("#phone_id").parent().after('<div class="error invalid-feedback"><i class="icon fas fa-question-circle"></i> Please choose a phone</div>');
+            }
+        }else{
+            $("#brand_id").parent().addClass('is-invalid');
+            $("#brand_id").parent().after('<div class="error invalid-feedback"><i class="icon fas fa-question-circle"></i> Please choose a brand</div>');
+        }
+        
+    });
+    function getPhoneList(brand_id){
+        if(brand_id){
+            $(".error").each(function () {
+                    $(this).empty();//remove error text
+                });
+                $("#searchDataForm").find('.is-invalid').removeClass('is-invalid');
+            $.ajax({
+                url: "{{route('brand.phone.list')}}",
+                type: "POST",
+                data:{brand_id:brand_id,_token:_token},
+                dataType: "JSON",
+                success: function (data) {
+                    $('#phone_id').html('');
+                    $('#phone_id').html(data);
+                    $('#phone_id.selectpicker').selectpicker('refresh');
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });
+        }
+    }
+
+    function hide_modal(){
+        $('.service-modal-section').addClass('d-none');
+    }
+
+ </script>
+@endpush
