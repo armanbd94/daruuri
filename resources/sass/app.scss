@@ -1,8 +1,11 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
-// Variables
-@import 'variables';
-
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import '../asset/css/backend/perfect-scrollbar.css';
+@import '../asset/css/backend/style.bundle.css';
+@import '../asset/css/backend/skins/header/base/light.css';
+@import '../asset/css/backend/skins/header/menu/light.css';
+@import '../asset/css/backend/skins/brand/dark.css';
+@import '../asset/css/backend/skins/aside/dark.css';
+@import '../asset/css/bootstrap-select.css';
+@import '../asset/css/fontawesome.css';
+@import '../asset/css/line-awesome.css';
+@import '../asset/css/flaticon.css';
+@import '../asset/css/toastr.min.css';

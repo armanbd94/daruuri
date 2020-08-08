@@ -17,7 +17,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.1",
         "maatwebsite/excel": "^3.1",
-        "nwidart/laravel-modules": "^7.1"
+        "nwidart/laravel-modules": "^7.1",
+        "typicms/nestablecollection": "^1.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.3",

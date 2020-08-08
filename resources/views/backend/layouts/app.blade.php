@@ -11,23 +11,9 @@
     <title>{{ config('settings.site_title') ?? env('APP_NAME') }} - @yield('title')</title>
 	<link rel="shortcut icon" href="storage/{{LOGO.config('settings.site_favicon') }}" />
     <!-- Styles -->
-    {{-- <link href="{{ asset('css/backend/app.css') }}" rel="stylesheet"> --}}
-	<!--begin:: Global Mandatory Vendors -->
-	<link href="css/backend/perfect-scrollbar.css" rel="stylesheet" type="text/css" />
+    <link href="css/app.css" rel="stylesheet">
 
-    <!--begin::Global Theme Styles(used by all pages) -->
-    <link href="css/backend/style.bundle.css" rel="stylesheet" type="text/css" />
-    <!--begin::Layout Skins(used by all pages) -->
-    <link href="css/backend/skins/header/base/light.css" rel="stylesheet" type="text/css" />
-    <link href="css/backend/skins/header/menu/light.css" rel="stylesheet" type="text/css" />
-    <link href="css/backend/skins/brand/dark.css" rel="stylesheet" type="text/css" />
-    <link href="css/backend/skins/aside/dark.css" rel="stylesheet" type="text/css" />
     <link href="css/backend/datatables.bundle.min.css" rel="stylesheet" type="text/css" />
-    <link href="css/bootstrap-select.css" rel="stylesheet" type="text/css" />
-    <link href="css/fontawesome.css" rel="stylesheet" type="text/css" />
-    <link href="css/line-awesome.css" rel="stylesheet" type="text/css" />
-	<link href="css/flaticon.css" rel="stylesheet" type="text/css" />
-	<link href="css/toastr.min.css" rel="stylesheet" type="text/css" />
 	@stack('style')
 </head>
 <body class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading">
@@ -122,24 +108,20 @@
 				</div>
 			</div>
 		</div>
-
 		<!-- end:: Page -->
 
-     <!-- Scripts -->
-     {{-- <script src="{{ asset('js/backend/app.js') }}" defer></script> --}}
-     <!--begin:: Global Mandatory Vendors -->
-		<script src="js/backend/jquery.min.js" type="text/javascript"></script>
-		<script src="js/backend/popper.js" type="text/javascript"></script>
-        <script src="js/backend/bootstrap.min.js" type="text/javascript"></script>
-        <script src="js/backend/js.cookie.js" type="text/javascript"></script>
-		<script src="js/backend/moment.min.js" type="text/javascript"></script>
-		<script src="js/backend/tooltip.min.js" type="text/javascript"></script>
-		<script src="js/backend/perfect-scrollbar.min.js" type="text/javascript"></script>
-        <script src="js/backend/sticky.min.js" type="text/javascript"></script>
+		<!-- Scripts -->
+		<script src="js/app.js"></script>
+		<script src="js/backend/perfect-scrollbar.min.js"></script>
+		<script src="js/backend/js.cookie.js"></script>
+		<script src="js/backend/moment.min.js"></script>
+		<script src="js/backend/tooltip.min.js"></script>
+		<script src="js/backend/perfect-scrollbar.min.js"></script>
+		<script src="js/backend/sticky.min.js"></script>
+		<script src="js/backend/bootstrap-select.js"></script>
+		<script src="js/backend/sweetalert2.js"></script>
+		<script src="js/toastr.min.js"></script>
         <script src="js/backend/datatables.bundle.min.js" type="text/javascript"></script>
-        <script src="js/backend/bootstrap-select.js" type="text/javascript"></script>
-        <script src="js/backend/sweetalert2.js" type="text/javascript"></script>
-        <script src="js/toastr.min.js" type="text/javascript"></script>
         
         <!--begin::Global Theme Bundle(used by all pages) -->
 		

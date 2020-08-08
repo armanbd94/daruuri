@@ -17,6 +17,27 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['prefix' => 'admin','as'=>'admin.'], function () {
 
+        //Module Routes
+        Route::get('module', 'ModuleController@index')->name('module');
+        Route::group(['prefix' => 'module', 'as'=>'module.'], function () {
+            Route::post('list', 'ModuleController@getList')->name('list');
+            Route::post('store', 'ModuleController@store')->name('store');
+            Route::post('edit', 'ModuleController@edit')->name('edit');
+            Route::post('delete', 'ModuleController@destroy')->name('delete');
+            Route::post('bulk-action-delete', 'ModuleController@bulk_action_delete')->name('bulkaction');
+            Route::post('parent-module-list', 'ModuleController@parent_module_list')->name('parent');
+        });
+
+        //Method Routes
+        Route::get('method', 'MethodController@index')->name('method');
+        Route::group(['prefix' => 'method', 'as'=>'method.'], function () {
+            Route::post('list', 'MethodController@getList')->name('list');
+            Route::post('store', 'MethodController@store')->name('store');
+            Route::post('edit', 'MethodController@edit')->name('edit');
+            Route::post('delete', 'MethodController@destroy')->name('delete');
+            Route::post('bulk-action-delete', 'MethodController@bulk_action_delete')->name('bulkaction');
+        });
+
         //Brand Routes
         Route::get('brand', 'BrandController@index')->name('brand');
         Route::group(['prefix' => 'brand', 'as'=>'brand.'], function () {
