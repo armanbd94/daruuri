@@ -422,8 +422,6 @@
                 <div class="kt-header__topbar-user">
                     <span class="kt-header__topbar-welcome kt-hidden-mobile">Hi,</span>
                     <span class="kt-header__topbar-username kt-hidden-mobile">{{explode(' ',Auth::user()->name)[0]}}</span>
-                    <img class="kt-hidden" alt="Pic" src="./assets/media/users/300_25.jpg" />
-
                     <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
                     <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold">{{Auth::user()->name[0]}}</span>
                 </div>
@@ -434,7 +432,7 @@
                 <div class="kt-user-card kt-user-card--skin-dark kt-notification-item-padding-x" style="background-image: url(images/bg-1.jpg)">
                     <div class="kt-user-card__avatar">
                         @if (!empty(Auth::user()->avatar))
-                            <img alt="{{explode(' ',Auth::user()->name)[0]}}" src="storage/user/{{Auth::user()->avatar}}" />
+                            <img alt="{{explode(' ',Auth::user()->name)[0]}}" src="storage/user/{{Auth::user()->avatar}}" style="max-width:6rahman.ali@gmail.com0px;" />
                         @else 
                             <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
                             <span class="kt-badge kt-badge--lg kt-badge--rounded kt-badge--bold kt-font-success">{{Auth::user()->name[0]}}</span>
@@ -452,16 +450,13 @@
 
                 <!--begin: Navigation -->
                 <div class="kt-notification">
-                    <a href="#" class="kt-notification__item">
+                    <a href="{{route('admin.profile')}}" class="kt-notification__item">
                         <div class="kt-notification__item-icon">
                             <i class="flaticon2-calendar-3 kt-font-success"></i>
                         </div>
                         <div class="kt-notification__item-details">
                             <div class="kt-notification__item-title kt-font-bold">
                                 My Profile
-                            </div>
-                            <div class="kt-notification__item-time">
-                                Account settings and more
                             </div>
                         </div>
                     </a>

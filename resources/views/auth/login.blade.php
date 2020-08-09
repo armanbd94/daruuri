@@ -43,6 +43,12 @@
 								<div class="kt-login__head">
 									<h3 class="kt-login__title">Sign In To Admin</h3>
 								</div>
+								@if (session('error'))
+								<div class="alert alert-danger alert-dismissible" role="alert">
+									<button class="close" type="button" data-dismiss="alert">×</button>
+									<strong>Error! </strong> {{ session('error') }}
+								</div>
+								@endif
 								<form class="kt-form" method="POST" action="{{ route('login') }}">
                                     @csrf
 									<div class="input-group">

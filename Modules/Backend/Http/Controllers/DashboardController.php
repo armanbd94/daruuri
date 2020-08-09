@@ -5,7 +5,7 @@ namespace Modules\Backend\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-
+use Modules\Backend\Entities\Module;
 class DashboardController extends Controller
 {
     /**
@@ -14,6 +14,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        // $menus = Module::doesntHave('parent')
+        // ->select('id','module_name','module_link','module_icon','module_sequence')
+        // ->orderBy('module_sequence','asc')
+        // ->with('children:id,parent_id,module_name,module_link,module_icon,module_sequence')
+        // ->get();
+        // dd($menus->toArray());
         return view('backend::home');
     }
 

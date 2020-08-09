@@ -5,6 +5,7 @@ define('PRODUCT','product/');
 define('PAGE','page/');
 define('SLIDER','slider/');
 define('SERVICE','service/');
+define('USER','user/');
 
 define('TEXT_STATUS',['1' => 'Active','2'=>'In Active']);
 define('BUTTON_STATUS',[
@@ -16,6 +17,7 @@ define('CHECKBOX_STATUS',['1'=>'checked','2'=>'']);
 define('EDIT_ICON','<i class="kt-nav__link-icon flaticon2-contract text-info"></i> <span class="kt-nav__link-text">Edit</span>');
 define('VIEW_ICON','<i class="kt-nav__link-icon flaticon2-expand text-success"></i> <span class="kt-nav__link-text">View</span>');
 define('DELETE_ICON','<i class="kt-nav__link-icon flaticon2-trash text-danger"></i> <span class="kt-nav__link-text">Delete</span>');
+define('PASSWORD_ICON','<i class="kt-nav__link-icon flaticon2-lock text-warning"></i> <span class="kt-nav__link-text">Change Password</span>');
 
 define('MAIL_DRIVER',(['smtp','sendmail','mail']));
 define('MAIL_PORT',(['25','465','587']));

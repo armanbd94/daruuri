@@ -38,6 +38,25 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('bulk-action-delete', 'MethodController@bulk_action_delete')->name('bulkaction');
         });
 
+        //User Routes
+        Route::get('user', 'UserController@index')->name('user');
+        Route::group(['prefix' => 'user', 'as'=>'user.'], function () {
+            Route::post('list', 'UserController@getList')->name('list');
+            Route::post('store', 'UserController@store')->name('store');
+            Route::post('show', 'UserController@show')->name('show');
+            Route::post('edit', 'UserController@edit')->name('edit');
+            Route::post('delete', 'UserController@destroy')->name('delete');
+            Route::post('bulk-action-delete', 'UserController@bulk_action_delete')->name('bulkaction');
+            Route::post('change-password', 'UserController@change_password')->name('change.password');
+        });
+
+        //Profile Routes
+        Route::get('profile', 'ProfileController@index')->name('profile');
+        Route::group(['prefix' => 'profile', 'as'=>'profile.'], function () {
+            Route::post('update', 'ProfileController@update')->name('update');
+            Route::post('change-password', 'ProfileController@change_password')->name('change.password');
+        });
+
         //Brand Routes
         Route::get('brand', 'BrandController@index')->name('brand');
         Route::group(['prefix' => 'brand', 'as'=>'brand.'], function () {
