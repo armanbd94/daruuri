@@ -26,7 +26,7 @@
                 <div class="col-md-3">
                     <div class="product-card">
                         <div class="img-box">
-                            <img src="{{$product->product_image}}" alt="{{$product->product_name}}">
+                            <img src="storage/{{PRODUCT.$product->product_image}}" alt="{{$product->product_name}}">
                         </div>
                         <div class="content">
                             <h4>{{$product->product_name}}</h4>

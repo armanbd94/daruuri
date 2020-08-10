@@ -63,9 +63,9 @@
                             <div class="icon-wrapper"> <a class="icon icon-type-image icon-default"> <img
                                         src="images/icon/c6.png" alt="Image"> </a></div>
                             <div class="icon-text">
-                                <h5 class="icon-box-title mt-0">25 Years Exprience </h5>
+                                <h5 class="icon-box-title mt-0">Quality Parts </h5>
                                 <div class="content">
-                                    <p>We have 25 Years experience</p>
+                                    <p>Reliable profession and high quality parts</p>
                                 </div>
                             </div>
                         </div>

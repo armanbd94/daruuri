@@ -47,7 +47,7 @@ class ContactController extends FrontendBaseController
                 if(request('g-recaptcha-response')){
                     $data = collect($request->all())->only(['name','email','phone','subject','message']);
                     // $result = ContactMessageJob::dispatch($data->all())->delay(now()->addMinutes(10));
-                    Mail::to('arman@gmail.com')->send(new ContactMessage($data->all()));
+                    Mail::to(env('MAIL_FROM_ADDRESS'))->send(new ContactMessage($data->all()));
                     if(!Mail::failures()){
                         $output = ['status'=>'success','message'=>'Message sent successfully.'];
                     }else{
