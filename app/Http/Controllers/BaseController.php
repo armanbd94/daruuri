@@ -89,9 +89,7 @@ class BaseController extends Controller
     //access blocked message method
     protected function access_blocked()
     {
-        $json['status']   = 'danger';
-        $json['message']  = 'Unauthorize access blocked';
-        return $json;
+        return redirect('admin/unauthorized')->with(['status'=>'error','message'=>'Unauthorized Access Blocked']);
     }
 
     protected function success_status()

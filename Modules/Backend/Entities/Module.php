@@ -28,9 +28,28 @@ class Module extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+    // public function children()
+    // {
+    //     return $this->hasMany(Module::class, 'parent_id','id')->orderBy('module_sequence', 'asc');
+    // }
+
     public function children()
     {
-        return $this->hasMany(Module::class, 'parent_id','id')->orderBy('module_sequence', 'asc');
+        $role_id = auth()->user()->role_id;
+        $relation =  $this->hasMany(Module::class, 'parent_id','id')
+        ->orderBy('module_sequence', 'asc');
+        if($role_id != 1){
+            $relation->whereHas('roleModulePermission', function($q) use($role_id){
+                $q->where('role_id',$role_id);
+            });
+        }
+        return $relation;
+    }
+
+    public function submenu()
+    {
+        return $this->hasMany(Module::class, 'parent_id','id')
+        ->orderBy('module_sequence', 'asc')->with('method:id,module_id,method_name');
     }
 
     /**
@@ -92,8 +111,12 @@ class Module extends Model
 
     private function _get_datatables_query()
     {
-
-        $this->column_order = array('','id', 'module_name', 'module_link', 'module_icon','parent_id','module_sequence','');
+        if (permission('module-bulk-action-delete')){
+            $this->column_order = array('','id', 'module_name', 'module_link', 'module_icon','parent_id','module_sequence','');
+        }else{
+            $this->column_order = array('id', 'module_name', 'module_link', 'module_icon','parent_id','module_sequence','');
+        }
+        
 
         $query = self::toBase();
 

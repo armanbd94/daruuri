@@ -108,9 +108,14 @@ class Product extends Model
 
     private function _get_datatables_query()
     {
-
-        $this->column_order = array('','products.id', '', 'products.product_name', 'products.brand_id',
-        'products.category_id','products.status', '');
+        if (permission('product-bulk-action-delete')){
+            $this->column_order = array('','products.id', '', 'products.product_name', 'products.brand_id',
+            'products.category_id','products.status', '');
+        }else{
+            $this->column_order = array('products.id', '', 'products.product_name', 'products.brand_id',
+            'products.category_id','products.status', '');
+        }
+        
         $query = self::with(['brand:id,brand_name','category:id,category_name']);
 
         if (!empty($this->brandID)) {

@@ -26,10 +26,10 @@ class Role extends Model
     }
 
     public function roleModulePermission() {
-        return $this->hasMany('Modules\Backend\Entities\RoleModulePermission');
+        return $this->belongsToMany('Modules\Backend\Entities\Module','role_module_permissions','role_id','module_id','id','id')->withTimestamps();
     }
     public function roleMethodPermission() {
-        return $this->hasMany('Modules\Backend\Entities\RoleMethodPermission');
+        return $this->belongsToMany('Modules\Backend\Entities\Method','role_method_permissions','role_id','method_id','id','id')->withTimestamps();
     }
     /***********************************************
      * ==== Start :: DataTable Server Side ==== *

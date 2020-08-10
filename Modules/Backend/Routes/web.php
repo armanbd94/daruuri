@@ -14,6 +14,7 @@
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('admin', 'DashboardController@index');
+    Route::get('admin/unauthorized', 'DashboardController@unauthorized');
 
     Route::group(['prefix' => 'admin','as'=>'admin.'], function () {
 
@@ -36,6 +37,17 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('edit', 'MethodController@edit')->name('edit');
             Route::post('delete', 'MethodController@destroy')->name('delete');
             Route::post('bulk-action-delete', 'MethodController@bulk_action_delete')->name('bulkaction');
+        });
+
+        //Role Routes
+        Route::get('role', 'RoleController@index')->name('role');
+        Route::group(['prefix' => 'role', 'as'=>'role.'], function () {
+            Route::post('list', 'RoleController@getList')->name('list');
+            Route::get('create', 'RoleController@create')->name('create');
+            Route::post('store', 'RoleController@store')->name('store');
+            Route::get('edit/{role}', 'RoleController@edit')->name('edit');
+            Route::post('delete', 'RoleController@destroy')->name('delete');
+            Route::post('bulk-action-delete', 'RoleController@bulk_action_delete')->name('bulkaction');
         });
 
         //User Routes
@@ -139,7 +151,43 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('bulk-action-delete', 'HighlightedServiceController@bulk_action_delete')->name('bulkaction');
         });
 
+        //Review Routes
+        Route::get('customer-feedback', 'ReviewController@index')->name('customer.feedback');
+        Route::group(['prefix' => 'customer-feedback', 'as'=>'customer.feedback.'], function () {
+            Route::post('list', 'ReviewController@getList')->name('list');
+            Route::post('show', 'ReviewController@show')->name('show');
+            Route::post('delete', 'ReviewController@destroy')->name('delete');
+            Route::post('bulk-action-delete', 'ReviewController@bulk_action_delete')->name('bulkaction');
+        });
+
         Route::resource('setting', 'SettingController')->only(['index','store']);
         Route::post('page', 'SettingController@storePageData')->name('page');
+
+        Route::get('mark-all-read', function () {
+            auth()->user()->unreadNotifications->markAsRead();
+            return back();
+        })->name('mark.all.read');
+
+        Route::get('delete-all-notification', function () {
+            auth()->user()->notifications()->delete();
+            return back()->with(['status'=>'success','message'=>'Notifications Deleted Successfully']);
+        })->name('delete.all.notification');
+
+        Route::get('read-notification/{id}', function (string $id) {
+            
+            $feedback = \DB::table('notifications')->where('id',$id)->first();
+            \DB::table('notifications')->where('id',$id)->update(['read_at' => now()]);
+            return view('backend::read-notification',compact('feedback'));
+        })->name('read.notification');
+
+        Route::get('delete-notification/{id}', function (string $id) {
+            $deleted = \DB::table('notifications')->where('id',$id)->delete();
+            if($deleted){
+                return redirect('admin')->with(['status'=>'success','message'=>'Notification Deleted Successfully']);
+            }else{
+                return redirect()->back()->with(['status'=>'error','message'=>'Notification Cannot Delete']);
+            }
+            
+        })->name('delete.notification');
     });
 });

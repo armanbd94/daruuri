@@ -90,8 +90,11 @@ class Brand extends Model
 
     private function _get_datatables_query()
     {
-
-        $this->column_order = array('','id', 'brand_name', 'status', '');
+        if (permission('brand-bulk-action-delete')) {
+            $this->column_order = array('','id', 'brand_name', 'status', '');
+        }else{
+            $this->column_order = array('id', 'brand_name', 'status', '');
+        }
         $query = self::toBase()->select('id','brand_name', 'status');
 
         if (!empty($this->brandName)) {

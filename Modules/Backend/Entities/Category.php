@@ -87,8 +87,11 @@ class Category extends Model
 
     private function _get_datatables_query()
     {
-
-        $this->column_order = array('','id', 'category_name', 'status', '');
+        if (permission('category-bulk-action-delete')) {
+            $this->column_order = array('','id', 'category_name', 'status', '');
+        }else{
+            $this->column_order = array('id', 'category_name', 'status', '');
+        }
         $query = self::toBase()->select('id','category_name', 'status');
 
         if (!empty($this->categoryName)) {

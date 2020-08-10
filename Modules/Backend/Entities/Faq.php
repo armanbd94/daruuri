@@ -71,8 +71,12 @@ class Faq extends Model
 
     private function _get_datatables_query()
     {
-
-        $this->column_order = array('','id', 'question', 'answer','sorting', '');
+        if (permission('faqs-bulk-action-delete')) {
+            $this->column_order = array('','id', 'question', 'answer','sorting', '');
+        }else{
+            $this->column_order = array('id', 'question', 'answer','sorting', '');
+        }
+        
         $query = self::toBase()->select('id','question', 'answer','sorting');
 
         if (!empty($this->question)) {

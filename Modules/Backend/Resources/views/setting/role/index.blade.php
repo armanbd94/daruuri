@@ -16,8 +16,6 @@
             <span class="kt-subheader__breadcrumbs-separator"></span>
             <a href="{{url('admin')}}" class="kt-subheader__breadcrumbs-link">Dashboard</a>
             <span class="kt-subheader__breadcrumbs-separator"></span>
-            <a href="{{route('admin.product')}}" class="kt-subheader__breadcrumbs-link">Product</a>
-            <span class="kt-subheader__breadcrumbs-separator"></span>
             <a href="javascript:void(0);" class="kt-subheader__breadcrumbs-link">
                 {{$sub_title}} </a>
 
@@ -26,11 +24,9 @@
     </div>
     <div class="kt-subheader__toolbar">
         <div class="kt-subheader__wrapper">
-            @if (permission('category-add')) 
-            <button type="button" onclick="show_modal(modal_title='Add New Category', btn_text='Save')" class="btn btn-brand btn-icon-sm btn-sm">
+            <a href="{{route('admin.role.create')}}" type="button" class="btn btn-brand btn-icon-sm btn-sm">
                 <i class="fas fa-plus-square"></i> Add New
-            </button>
-            @endif
+            </a>
         </div>
     </div>
 </div>
@@ -54,20 +50,11 @@
                 <div class="col-xl-12 order-2 order-xl-1 py-25px">
                     <form method="POST" id="form-filter" class="m-form m-form--fit m--margin-bottom-20">
                         <div class="row">
-                            <div class="col-md-5 mb-3">
-                                <label>Category Name</label>
-                                <input type="text" class="form-control" name="category_name" id="category_name" placeholder="Enter category name" />
+                            <div class="col-md-6 mb-3">
+                                <label>Role Name</label>
+                                <input type="text" class="form-control" name="role" id="role" placeholder="Enter role name" />
                             </div>
-                            <div class="col-md-5 mb-3">
-                                <label>Status</label>
-                                <select  class="form-control selectpicker" name="status" id="status" data-live-search="true" data-live-search-placeholder="Search" title="Choose one of the following...">
-                                    <option value="">Select please</option>
-                                    @foreach (TEXT_STATUS as $id => $text)
-                                    <option value="{{$id}}">{{$text}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-2 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="mt-25px">    
                                     <button id="btn-reset" class="btn btn-danger btn-sm btn-elevate btn-icon float-right" type="button"
                                     data-skin="dark" data-toggle="kt-tooltip" data-placement="top" title="" data-original-title="Reset">
@@ -88,16 +75,13 @@
                     <table class="table table-striped table-bordered table-hover table-checkable" id="dataTable">
                         <thead>
                             <tr>
-                                @if (permission('category-bulk-action-delete')) 
                                 <th>
                                     <label class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid">
                                         <input type="checkbox" class="selectall" onchange="select_all()">&nbsp;<span></span>
                                     </label>
                                 </th>
-                                @endif
                                 <th>SR</th>
-                                <th>Category Name</th>
-                                <th>Status</th>
+                                <th>Role Name</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -110,7 +94,7 @@
     <!--end::Portlet-->
 
     <!--Begin:: Modal-->
-    @include('backend::product.category.modal')
+    @include('backend::setting.role.modal')
     <!--End:: Modal-->
 </div>
 @endsection
@@ -119,7 +103,7 @@
 @push('script')
 <script>
 let table;
-const _token = "{{csrf_token()}}";
+let _token = "{{csrf_token()}}";
 $(document).ready(function () {
     /** BEGIN:: DATATABLE SERVER SIDE CODE **/
     table = $('#dataTable').DataTable({
@@ -144,35 +128,29 @@ $(document).ready(function () {
 
         // Load data for the table's content from an Ajax source//
         "ajax": {
-            "url": "{{route('admin.category.list')}}",
+            "url": "{{route('admin.role.list')}}",
             "type": "POST",
             "data": function (data) {
-                data.category_name   = $('#form-filter #category_name').val();
-                data.status       = $('#form-filter #status').val();
-                data._token       = _token;
+                data.role   = $('#form-filter #role').val();
+                data._token = _token;
             }
         },
 
         //Set column definition initialisation properties.
         "columnDefs": [
             {
-                @if (permission('category-bulk-action-delete')) 
-                "targets": [0,4],
-                @else
-                "targets": [3],
-                @endif
+                "targets": [0,3],
                 "orderable": false, //set not orderable
                 "className": "text-center",
             }
         ],
-        @if (permission('category-report')) 
         "dom": 'lTgBfrtip',
         "buttons": [
             'colvis',
             {
                 "extend": 'csv',
                 "title": "{{ucwords($sub_title)}}",
-                "filename": 'category-report',
+                "filename": 'brand-report',
                 "exportOptions": {
                      columns: ':visible'
                 }
@@ -180,7 +158,7 @@ $(document).ready(function () {
             {
                 "extend": 'excel',
                 "title": "{{ucwords($sub_title)}}",
-                "filename": 'category-report',
+                "filename": 'brand-report',
                 "exportOptions": {
                      columns: ':visible'
                 }
@@ -188,7 +166,7 @@ $(document).ready(function () {
             {
                 "extend": 'pdf',
                 "title": "{{ucwords($sub_title)}}",
-                "filename": 'category-report',
+                "filename": 'brand-report',
                 "orientation": 'portrait', //landscape
                 "pageSize": 'A4', //A3 , A5 , A6 , legal , letter
                 "exportOptions": {
@@ -208,7 +186,6 @@ $(document).ready(function () {
             {
                 "extend": 'print',
                 "title": "{{ucwords($sub_title)}}",
-                "filename": 'category-report',
                 "orientation": 'portrait',//'landscape', //portrait
                 "pageSize": 'A4', //A3 , A5 , A6 , legal , letter
                 "exportOptions": {
@@ -221,7 +198,6 @@ $(document).ready(function () {
                 }
             }
         ],
-        @endif
 
     });
     /** END:: DATATABLE SERVER SIDE CODE **/
@@ -233,71 +209,21 @@ $(document).ready(function () {
 
     $('#btn-reset').click(function () {
         $('#form-filter')[0].reset();
-        $('#form-filter .selectpicker').selectpicker('refresh');
         table.ajax.reload();
     });
     /** END:: DATATABLE SEARCH FORM BUTTON TRIGGER CODE **/
 
     /** BEGIN:: DATATABLE APPEND DELETE ALL BUTTON **/
-    @if (permission('category-bulk-action-delete')) 
-    let button = `<button class="btn btn-sm btn-danger btn-bold ml-1" type="button" id="bulk_action_delete"><i class="kt-nav__link-icon flaticon2-trash"></i> Delete All</button>`;
+    let button = `<button class="btn btn-sm btn-label-danger btn-bold ml-1" type="button" id="bulk_action_delete"><i class="kt-nav__link-icon flaticon2-trash"></i> Delete All</button>`;
     $('#dataTable_wrapper .dt-buttons').append(button);
-    @endif
     /** END:: DATATABLE APPEND DELETE ALL BUTTON  **/
 
-    /** BEGIN:: DATA ADD/UPDATE AJAX CODE **/
-    $(document).on('click', '#save-btn',function(event){
-        let url = "{{route('admin.category.store')}}";
-        let id  = $('#update_id').val();
-        let method;
-        if(id){
-            method = "update";
-        }else{
-            method = "store";
-        }
-        store_data(table, url, method);
-    });
-    /** END:: DATA ADD/UPDATE AJAX CODE **/
-
-    //BEGIN: FETCHING EDIT DATA CODE
-    $(document).on('click','.edit_data',function () {
-        var id = $(this).data('id');
-        $('#saveDataForm')[0].reset(); // reset form on show modals
-        $(".error").each(function () {
-            $(this).empty();//remove error text
-        });
-        $("#saveDataForm").find('.is-invalid').removeClass('is-invalid');//remover red border color
-        $('.selectpicker').selectpicker('refresh');
-        $.ajax({
-            url: "{{route('admin.category.edit')}}",
-            type: "POST",
-            data:{id:id,_token:_token},
-            dataType: "JSON",
-            success: function (data) {
-                $('#saveDataForm #update_id').val(data.category.id);
-                $('#saveDataForm #category_name').val(data.category.category_name);
-                $('#saveDataForm #category_slug').val(data.category.category_slug);
-                $('#saveDataForm select[name="status"]').val(data.category.status);
-                $('#saveDataForm .selectpicker').selectpicker('refresh');
-                $('#saveDataModal').modal({
-                    keyboard: false,
-                    backdrop: 'static', //make modal static
-                });
-                $('.modal-title').html('<i class="fas fa-edit"></i> <span>Edit '+data.category.category_name+' Data</span>');
-                $('#save-btn').text('Update');
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    });
-    //END: FETCHING EDIT DATA CODE
 
     //BEGIN: DELETE SINGLE DATA
     $(document).on('click','.delete_data',function () {
         let row = table.row( $(this).parents('tr') );
         let id  = $(this).data('id');
-        let url = "{{route('admin.category.delete')}}";
+        let url = "{{route('admin.role.delete')}}";
         delete_data(table,row,id,url);
     });
     //END: DELETE SINGLE DATA
@@ -320,15 +246,11 @@ $(document).ready(function () {
             });
 
         }else{
-            let url = "{{route('admin.category.bulkaction')}}";
+            let url = "{{route('admin.role.bulkaction')}}";
             bulk_action_delete(table,url,id,rows);
         }
     });
     //END: DELETE MULTIPLE CODE
-
-     //BEGIN: SELECT ALL CHECKBOX CHECKED IF ANY ROW SELECTED CODE
-     
-    //END: SELECT ALL CHECKBOX CHECKED IF ANY ROW SELECTED CODE
 
 }); 
 </script>

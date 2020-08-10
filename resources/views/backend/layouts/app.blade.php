@@ -128,6 +128,19 @@
 		
 		<script src="js/backend/main.js" type="text/javascript"></script>
 		<script src="js/backend/scripts.bundle.js" type="text/javascript"></script>
+		
 		@stack('script')
+		<script>
+			$(document).ready(function(){
+				<?php 
+				if (session('status')){
+				?>
+				notification("{{session('message')}}","{{session('status')}}");
+				<?php
+				}
+				?>
+			});
+			
+		</script>
 </body>
 </html>

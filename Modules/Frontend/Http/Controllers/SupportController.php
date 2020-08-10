@@ -47,7 +47,7 @@ class SupportController extends FrontendBaseController
                     $result = Review::create($data->all());
                     if($result){
                         
-                        Notification::send(User::all(), new CustomerFeedback($result));
+                        Notification::send(User::whereIn('role_id',[1,2])->get(), new CustomerFeedback($result));
                         $output = ['status'=>'success','message'=>'Your feedback submitted successfully.'];
                     }else{
                         $output = ['status'=>'error','message'=>'Your feedback failed to submit! Try again.'];

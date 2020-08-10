@@ -88,8 +88,11 @@ class Service extends Model
 
     private function _get_datatables_query()
     {
-
-        $this->column_order = array('','id', '', 'service_name', 'status', '');
+        if (permission('phone-service-bulk-action-delete')) {
+            $this->column_order = array('','id', '', 'service_name', 'status', '');
+        }else{
+            $this->column_order = array('id', '', 'service_name', 'status', '');
+        }
         $query = self::toBase()->select('id','service_name', 'service_icon','status');
 
         if (!empty($this->serviceName)) {

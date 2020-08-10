@@ -42,9 +42,16 @@ class CustomerFeedback extends Notification
     public function toArray($notifiable)
     {
         return [
-            'id'          => $this->data->id,
-            'name'        => $this->data->name,
-            'description' => $this->data->description,
+            'id'                    => $this->data->id,
+            'name'                  => $this->data->name,
+            'phone'                 => $this->data->phone_no,
+            'email'                 => $this->data->email,
+            'daruuri_rating'        => $this->data->daruuri_rating,
+            'communication_rating'  => $this->data->communication_rating,
+            'stuff_rating'          => $this->data->stuff_rating,
+            'service_rating'        => $this->data->service_rating,
+            'referal_rating'        => $this->data->referal_rating,
+            'description'           => $this->data->description,
         ];
     }
 }

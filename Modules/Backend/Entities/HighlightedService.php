@@ -69,9 +69,12 @@ class HighlightedService extends Model
 
     private function _get_datatables_query()
     {
-
-        $this->column_order = array('','id', '', 'service_name','description','sorting', '');
-
+        if (permission('highlighted-service-bulk-action-delete')) {
+            $this->column_order = array('','id', '', 'service_name','description','sorting', '');
+        } else {
+            $this->column_order = array('id', '', 'service_name','description','sorting', '');
+        }
+        
         $query = self::toBase()->select('id','service_name', 'image','description','sorting');
 
         if (!empty($this->service_name)) {

@@ -23,11 +23,15 @@ class SettingController extends BaseController
      */
     public function index()
     {
-        $this->setPageData('Setting', 'Setting','fas fa-tools');
-        $data['about']    = Page::toBase()->select('id','title','image','description')->find(1);
-        $data['hardware'] = Page::toBase()->select('id','title','image','description')->find(2);
-        $data['software'] = Page::toBase()->select('id','title','image','description')->find(3);
-        return view('backend::setting.index',compact('data'));
+        if (permission('setting-general')){
+            $this->setPageData('Setting', 'Setting','fas fa-tools');
+            $data['about']    = Page::toBase()->select('id','title','image','description')->find(1);
+            $data['hardware'] = Page::toBase()->select('id','title','image','description')->find(2);
+            $data['software'] = Page::toBase()->select('id','title','image','description')->find(3);
+            return view('backend::setting.index',compact('data'));
+        }else{
+            return $this->access_blocked();
+        }
     }
 
     public function store(Request $request)

@@ -71,9 +71,11 @@ class Slider extends Model
 
     private function _get_datatables_query()
     {
-
-        $this->column_order = array('','id', '', 'title', 'sub_title','button_link','sorting', '');
-
+        if (permission('slider-bulk-action-delete')){
+        $this->column_order = array('','id', 'id', 'title', 'sub_title','button_link','sorting', '');
+        }else{
+        $this->column_order = array('id', 'id', 'title', 'sub_title','button_link','sorting', '');
+        }
         $query = self::toBase()->select('id','title','sub_title','image','button_link','sorting');
 
         if (!empty($this->title)) {

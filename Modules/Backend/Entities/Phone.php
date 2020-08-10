@@ -99,7 +99,12 @@ class Phone extends Model
     private function _get_datatables_query()
     {
 
-        $this->column_order = array('','phones.id', 'phones.brand_id', 'phones.phone_name','phones.status', '');
+        if (permission('phone-bulk-action-delete')){
+            $this->column_order = array('','phones.id', 'phones.brand_id', 'phones.phone_name','phones.status', '');
+        }else{
+            $this->column_order = array('phones.id', 'phones.brand_id', 'phones.phone_name','phones.status', '');
+        }
+        
         $query = self::with('brand:id,brand_name');
 
         if (!empty($this->brandID)) {

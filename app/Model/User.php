@@ -111,8 +111,11 @@ class User extends Authenticatable
      private function _get_datatables_query()
      {
 
-        $this->column_order = array('', 'users.id','users.id', 'users.name', 'users.email','users.mobile','users.status','');
- 
+        if (permission('user-bulk-action-delete')) {
+            $this->column_order = array('', 'users.id','users.id', 'users.name', 'users.email','users.mobile','users.status','');
+        }else{
+            $this->column_order = array('users.id','users.id', 'users.name', 'users.email','users.mobile','users.status','');
+        }
          $query = self::with('role:id,role')
          ->where('users.id','!=',1);
  

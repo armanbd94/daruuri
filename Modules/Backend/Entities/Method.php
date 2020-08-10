@@ -76,8 +76,13 @@ class Method extends Model
 
     private function _get_datatables_query()
     {
-        
+        if (permission('method-bulk-action-delete')) {
             $this->column_order = array('','methods.id', 'methods.method_name', 'methods.method_slug','methods.module_id','');
+        } else {
+            $this->column_order = array('methods.id', 'methods.method_name', 'methods.method_slug','methods.module_id','');
+        }
+        
+            
 
         $query = self::with('module:id,module_name,module_icon');
 

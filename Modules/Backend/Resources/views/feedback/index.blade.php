@@ -5,7 +5,7 @@
 @endsection
 
 @push('style')
-
+<link href="css/bootstrap-datepicker.min.css" rel="stylesheet">
 @endpush
 
 @section('content_head')
@@ -24,11 +24,7 @@
     </div>
     <div class="kt-subheader__toolbar">
         <div class="kt-subheader__wrapper">
-            @if (permission('user-add'))
-            <button type="button" id="showModal" class="btn btn-brand btn-icon-sm btn-sm">
-                <i class="fas fa-plus-square"></i> Add New
-            </button>
-            @endif
+
         </div>
     </div>
 </div>
@@ -53,33 +49,26 @@
                     <form method="POST" id="form-filter" class="m-form m-form--fit m--margin-bottom-20">
                         <div class="row">
                             <div class="col-md-3 mb-3">
-                                <label>Name</label>
-                                <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" />
+                                <label>From Date</label>
+                                <input type="text" class="form-control date" name="from_date" id="from_date"  />
                             </div>
                             <div class="col-md-3 mb-3">
-                                <label>Email</label>
-                                <input type="text" class="form-control" name="email" id="email" placeholder="Enter email" />
+                                <label>To Date</label>
+                                <input type="text" class="form-control date" name="to_date" id="to_date"  />
                             </div>
                             <div class="col-md-3 mb-3">
-                                <label>Role</label>
-                                <select  class="form-control selectpicker" name="role_id" id="role_id" data-live-search="true" data-live-search-placeholder="Search" title="Choose one of the following...">
-                                    @if (!empty($data['roles']))
-                                    @foreach ($data['roles'] as $role)
-                                    <option value="{{$role->id}}">{{$role->role}}</option>
-                                    @endforeach
-                                    @endif
-                                </select>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label>Status</label>
-                                <select  class="form-control selectpicker" name="status" id="status" data-live-search="true" data-live-search-placeholder="Search" title="Choose one of the following...">
+                                <label>Daruuri Rating</label>
+                                <select  class="form-control selectpicker" name="daruuri_rating" id="daruuri_rating" data-live-search="true" data-live-search-placeholder="Search" title="Choose one of the following...">
                                     <option value="">Select please</option>
-                                    @foreach (TEXT_STATUS as $id => $text)
-                                    <option value="{{$id}}">{{$text}}</option>
-                                    @endforeach
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
                                 </select>
                             </div>
-                            <div class="col-md-12 mb-3">
+                            
+                            <div class="col-md-3 mb-3">
                                 <div class="mt-25px">    
                                     <button id="btn-reset" class="btn btn-danger btn-sm btn-elevate btn-icon float-right" type="button"
                                     data-skin="dark" data-toggle="kt-tooltip" data-placement="top" title="" data-original-title="Reset">
@@ -100,7 +89,7 @@
                     <table class="table table-striped table-bordered table-hover table-checkable" id="dataTable">
                         <thead>
                             <tr>
-                                @if (permission('user-bulk-action-delete'))
+                                @if (permission('customer-feedback-bulk-action-delete'))
                                 <th>
                                     <label class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid">
                                         <input type="checkbox" class="selectall" onchange="select_all()">&nbsp;<span></span>
@@ -108,11 +97,16 @@
                                 </th>
                                 @endif
                                 <th>SR</th>
-                                <th>Avatar</th>
                                 <th>Name</th>
-                                <th>Role</th>
+                                <th>Phone</th>
                                 <th>Email</th>
-                                <th>Status</th>
+                                <th>Daruuri</th>
+                                <th>Communication</th>
+                                <th>Stuff</th>
+                                <th>Service</th>
+                                <th>Reference</th>
+                                <th>Message</th>
+                                <th>Date</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -125,22 +119,28 @@
     <!--end::Portlet-->
 
     <!--Begin:: Modal-->
-    @include('backend::user.modal')
-    @include('backend::user.show-modal')
-    @include('backend::user.change-password')
+    @include('backend::feedback.show-modal')
     <!--End:: Modal-->
 </div>
 @endsection
 
 
 @push('script')
+<script src="js/backend/bootstrap-datepicker.min.js"></script>
 <script>
 let table;
-let _token = "{{csrf_token()}}";
-loadFile = function(event, target_id) {
-    var output = document.getElementById(target_id);
-    output.src = URL.createObjectURL(event.target.files[0]);
-};
+const _token = "{{csrf_token()}}";
+$(".date").datepicker({
+    autoclose: true,
+    todayBtn: "linked",
+    todayHighlight: !0,
+    orientation: "bottom left",
+    format: "yyyy-mm-dd",
+    templates: {
+        leftArrow: '<i class="fas fa-angle-left"></i>',
+        rightArrow: '<i class="fas fa-angle-right"></i>'
+    }
+});
 $(document).ready(function () {
     /** BEGIN:: DATATABLE SERVER SIDE CODE **/
     table = $('#dataTable').DataTable({
@@ -165,37 +165,36 @@ $(document).ready(function () {
 
         // Load data for the table's content from an Ajax source//
         "ajax": {
-            "url": "{{route('admin.user.list')}}",
+            "url": "{{route('admin.customer.feedback.list')}}",
             "type": "POST",
             "data": function (data) {
-                data.name         = $('#form-filter #name').val();
-                data.email        = $('#form-filter #email').val();
-                data.role_id      = $('#form-filter #role_id').val();
-                data.status       = $('#form-filter #status').val();
-                data._token       = _token;
+                data.from_date      = $('#form-filter #from_date').val();
+                data.to_date        = $('#form-filter #to_date').val();
+                data.daruuri_rating = $('#form-filter #daruuri_rating').val();
+                data._token         = _token;
             }
         },
 
         //Set column definition initialisation properties.
         "columnDefs": [
             {
-                @if (permission('user-bulk-action-delete'))
-                "targets": [0,7],
+                @if (permission('customer-feedback-bulk-action-delete'))
+                "targets": [0,12],
                 @else
-                "targets": [6],
+                "targets": [11],
                 @endif
                 "orderable": false, //set not orderable
                 "className": "text-center",
             }
         ],
-        @if (permission('user-report'))
+        @if (permission('customer-feedback-report'))
         "dom": 'lTgBfrtip',
         "buttons": [
             'colvis',
             {
                 "extend": 'csv',
                 "title": "{{ucwords($sub_title)}}",
-                "filename": 'user-report',
+                "filename": 'customer-feedback-report',
                 "exportOptions": {
                      columns: ':visible'
                 }
@@ -203,7 +202,7 @@ $(document).ready(function () {
             {
                 "extend": 'excel',
                 "title": "{{ucwords($sub_title)}}",
-                "filename": 'user-report',
+                "filename": 'customer-feedback-report',
                 "exportOptions": {
                      columns: ':visible'
                 }
@@ -211,7 +210,7 @@ $(document).ready(function () {
             {
                 "extend": 'pdf',
                 "title": "{{ucwords($sub_title)}}",
-                "filename": 'user-report',
+                "filename": 'customer-feedback-report',
                 "orientation": 'portrait', //landscape
                 "pageSize": 'A4', //A3 , A5 , A6 , legal , letter
                 "exportOptions": {
@@ -231,7 +230,7 @@ $(document).ready(function () {
             {
                 "extend": 'print',
                 "title": "{{ucwords($sub_title)}}",
-                "filename": 'user-report',
+                "filename": 'customer-feedback-report',
                 "orientation": 'portrait',//'landscape', //portrait
                 "pageSize": 'A4', //A3 , A5 , A6 , legal , letter
                 "exportOptions": {
@@ -262,63 +261,27 @@ $(document).ready(function () {
     /** END:: DATATABLE SEARCH FORM BUTTON TRIGGER CODE **/
 
     /** BEGIN:: DATATABLE APPEND DELETE ALL BUTTON **/
-    @if (permission('user-bulk-action-delete'))
+    @if(permission('customer-feedback-bulk-action-delete'))
     let button = `<button class="btn btn-sm btn-danger btn-bold ml-1" type="button" id="bulk_action_delete"><i class="kt-nav__link-icon flaticon2-trash"></i> Delete All</button>`;
     $('#dataTable_wrapper .dt-buttons').append(button);
     @endif
     /** END:: DATATABLE APPEND DELETE ALL BUTTON  **/
 
-     /** BEGIN:: SHOW ADD/UPDATE MODAL **/
-    $(document).on('click','#showModal',function(){
-        $('#saveDataForm')[0].reset(); //reset form
-        $('#update_id').val(''); //empty id input field
-        $(".error").each(function () {
-            $(this).empty(); //remove error text
-        });
-        $('#saveDataForm .show-image').attr("src", 'svg/upload.svg');
-        $("#saveDataForm").find('.is-invalid').removeClass('is-invalid'); //remover red border color
-        $("#password,#password_confirmation").parent().show();
-        $('#saveDataModal').modal({
-            keyboard: false,
-            backdrop: 'static', //make modal static
-        });
-
-        $('.selectpicker').selectpicker('refresh'); //empty selectpicker field
-        $('.modal-title').html('<i class="fas fa-plus-square"></i> <span>Add New User</span>'); //set modal title
-        $('#save-btn').text('Save'); //set save button text
-    });
-    /** END:: SHOW ADD/UPDATE MODAL **/
-
-    /** BEGIN:: DATA ADD/UPDATE AJAX CODE **/
-    $('#saveDataForm').on('submit', function(event){
-        event.preventDefault();
-        let id  = $('#update_id').val();
-        let url = "{{route('admin.user.store')}}";
-        let method;
-        if(id){
-            method = "update";
-        }else{
-            method = "store";
-        }
-        store_with_image_data(table, url, method, this);
-    });
-    /** END:: DATA ADD/UPDATE AJAX CODE **/
-
-    //BEGIN: FETCHING VIEW DATA CODE
-    $(document).on('click','.view_data',function () {
+     //BEGIN: FETCHING VIEW DATA CODE
+     $(document).on('click','.view_data',function () {
         var id = $(this).data('id');
         $.ajax({
-            url: "{{route('admin.user.show')}}",
+            url: "{{route('admin.customer.feedback.show')}}",
             type: "POST",
             data:{id:id,_token:_token},
             dataType: "JSON",
             success: function (data) {
-                $('#showDataModal .modal-body').html(data.user);
+                $('#showDataModal .modal-body').html(data.feedback);
                 $('#showDataModal').modal({
                     keyboard: false,
                     backdrop: 'static', //make modal static
                 });
-                $('.modal-title').html('<i class="fas fa-eye"></i> <span>'+data.name+' Data</span>');
+                $('.modal-title').html('<i class="fas fa-eye"></i> <span>Feedback Data</span>');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -327,53 +290,11 @@ $(document).ready(function () {
     });
     //END: FETCHING VIEW DATA CODE
 
-    //BEGIN: FETCHING EDIT DATA CODE
-    $(document).on('click','.edit_data',function () {
-        var id = $(this).data('id');
-        $('#saveDataForm')[0].reset(); // reset form on show modals
-        $(".error").each(function () {
-            $(this).empty();//remove error text
-        });
-        $("#password,#password_confirmation").parent().hide();
-        $("#saveDataForm").find('.is-invalid').removeClass('is-invalid');//remover red border color
-        $('.selectpicker').selectpicker('refresh');
-        $.ajax({
-            url: "{{route('admin.user.edit')}}",
-            type: "POST",
-            data:{id:id,_token:_token},
-            dataType: "JSON",
-            success: function (data) {
-                $('#saveDataForm #update_id').val(data.user.id);
-                $('#saveDataForm #name').val(data.user.name);
-                $('#saveDataForm #email').val(data.user.email);
-                $('#saveDataForm select[name="role_id"]').val(data.user.role_id);
-                $('#saveDataForm select[name="status"]').val(data.user.status);
-                $('#saveDataForm .selectpicker').selectpicker('refresh');
-                if(data.user.avatar){
-                    let file = "{{'storage/'.USER}}"+data.user.avatar;
-                    $('#saveDataForm #avatar-image').attr('src',file);
-                }
-                
-                $('#saveDataForm #old_avatar').val(data.user.avatar);
-                $('#saveDataModal').modal({
-                    keyboard: false,
-                    backdrop: 'static', //make modal static
-                });
-                $('.modal-title').html('<i class="fas fa-edit"></i> <span>Edit '+data.user.name+' Data</span>');
-                $('#save-btn').text('Update');
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    });
-    //END: FETCHING EDIT DATA CODE
-
     //BEGIN: DELETE SINGLE DATA
     $(document).on('click','.delete_data',function () {
         let row = table.row( $(this).parents('tr') );
         let id  = $(this).data('id');
-        let url = "{{route('admin.user.delete')}}";
+        let url = "{{route('admin.customer.feedback.delete')}}";
         delete_data(table,row,id,url);
     });
     //END: DELETE SINGLE DATA
@@ -396,69 +317,12 @@ $(document).ready(function () {
             });
 
         }else{
-            let url = "{{route('admin.user.bulkaction')}}";
+            let url = "{{route('admin.customer.feedback.bulkaction')}}";
             bulk_action_delete(table,url,id,rows);
         }
     });
     //END: DELETE MULTIPLE CODE
-
-     //BEGIN: SHOW CHANGE PASSWORD MODAL FORM
-     $(document).on('click','.change_password_data',function () {
-        
-        $('#changePasswordForm')[0].reset(); // reset form on show modals
-        $(".error").each(function () {
-            $(this).empty();//remove error text
-        });
-        $("#changePasswordForm").find('.is-invalid').removeClass('is-invalid');//remover red border color
-        $('#changePasswordForm #update_id').val($(this).data('id'));
-        $('#changePasswordModal').modal({
-            keyboard: false,
-            backdrop: 'static', //make modal static
-        });
-        $('#changePasswordModal .modal-title').html('<i class="kt-nav__link-icon flaticon2-lock"></i></i> <span>Change '+$(this).data('name')+' Password</span>'); //set modal title
-        $('#changePasswordModal #change-password-btn').text('Change Password');
-
-    });
-    //END: SHOW CHANGE PASSWORD MODAL FORM
-
-     /** BEGIN:: PASSWORD CHANGE AJAX CODE **/
-     $(document).on('click', '#change-password-btn',function(event){
-        $.ajax({
-            url: "{{route('admin.user.change.password')}}",
-            type: "POST",
-            data: $('#changePasswordForm').serialize(),
-            dataType: "JSON",
-            beforeSend: function () {
-                $('#change-password-btn').addClass('kt-spinner kt-spinner--md kt-spinner--light');
-            },
-            complete: function(){
-                $('#change-password-btn').removeClass('kt-spinner kt-spinner--md kt-spinner--light');
-            },
-            success: function (data) {
-                $("#changePasswordForm").find('.is-invalid').removeClass('is-invalid');
-                $("#changePasswordForm").find('.error').remove();
-
-                if (data.status) {
-                    notification(data.message, data.status);
-                    if(data.status == 'success'){
-                        table.ajax.reload( null, false );
-                        $('#changePasswordModal').modal('hide');
-                    }
-                } else {
-                    $.each(data.errors, function (key, value) {
-                        $("#changePasswordForm input[name='"+key+"']").addClass('is-invalid');
-                        $("#changePasswordForm input[name='"+key+"']").parent().append('<div id="'+key+'" class="error invalid-feedback">'+value+'</div>');
-                        
-                    });
-                }
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    });
-    /** END:: PASSWORD CHANGE AJAX CODE **/
-
 }); 
+
 </script>
 @endpush
