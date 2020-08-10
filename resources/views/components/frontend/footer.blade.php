@@ -92,19 +92,25 @@
                             Opening Hours</h4>
                         <ul
                             class="tm-widget tm-widget-opening-hours tm-widget-opening-hours-compressed opening-hours border-dark">
-                            <li class="clearfix"> <span>Monday - Tuesday</span>
-                                <div class="value">9.00 - 17.00</div>
-                            </li>
-                            <li class="clearfix"> <span>Wednesday</span>
-                                <div class="value">9.00 - 16.00</div>
-                            </li>
-                            <li class="clearfix"> <span>Thursday - Friday</span>
-                                <div class="value">9.00 - 16.00</div>
-                            </li>
                             <li class="clearfix"> <span>Saturday</span>
-                                <div class="value">9.00 - 16.00</div>
+                                <div class="value">7.00AM - 9.00PM</div>
                             </li>
                             <li class="clearfix"> <span>Sunday</span>
+                                <div class="value">7.00AM - 9.00PM</div>
+                            </li>
+                            <li class="clearfix"> <span>Monday</span>
+                                <div class="value">7.00AM - 9.00PM</div>
+                            </li>
+                            <li class="clearfix"> <span>Tuesday</span>
+                                <div class="value">7.00AM - 9.00PM</div>
+                            </li>
+                            <li class="clearfix"> <span>Wednesday</span>
+                                <div class="value">7.00AM - 9.00PM</div>
+                            </li>
+                            <li class="clearfix"> <span>Thursday</span>
+                                <div class="value">7.00AM - 9.00PM</div>
+                            </li>
+                            <li class="clearfix"> <span>Friday</span>
                                 <div class="value">Closed</div>
                             </li>
                         </ul>

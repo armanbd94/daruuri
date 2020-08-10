@@ -1,9 +1,11 @@
 @component('mail::message')
+
 Hello,
 
 {{$data['message']}}
 
 Thanks,<br>
-{{$data['name']}}<br>
-{{$data['phone']}}
+<b>{{$data['name']}}</b><br>
+{{$data['phone']}}<br>
+{{$data['email']}}
 @endcomponent
