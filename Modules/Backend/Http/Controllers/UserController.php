@@ -203,8 +203,8 @@ class UserController extends BaseController
         if($request->ajax()){
             if (permission('user-delete')) {
                 $result = $this->model->find($request->id);
-                if($result->avatar){
-                    $this->delete_file($request->avatar, USER);
+                if(!empty($result->avatar)){
+                    $this->delete_file($result->avatar, USER);
                 }
                 if($result->delete()){
                     $output = $this->success_status();
