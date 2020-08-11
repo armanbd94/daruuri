@@ -1,6 +1,6 @@
-<div class="row pt-5">
+<div class="row pt-5 justify-content-center">
     <div class="col-md-12 text-center pb-5">
-        <h3 style="margin: 0;">Services for <span style="color: #1bacd6;">{{$phones->phone_name}}</span></h3>
+        <h3 style="margin: 0;">Services for <span style="color: #1bacd6;">{{$phones->brand->brand_name.' '.$phones->phone_name}}</span></h3>
         <span>You feel it's expensive? just give us a call for best prices : <b style="color: #1bacd6;">{{config('settings.contact_number')}}</b></span>
     </div>
     @if ($phones->count())

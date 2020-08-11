@@ -26,7 +26,11 @@
                 <div class="col-md-3">
                     <div class="product-card">
                         <div class="img-box">
+                            @if (!empty($product->product_image))
                             <img src="storage/{{PRODUCT.$product->product_image}}" alt="{{$product->product_name}}">
+                            @else 
+                            <img src="svg/no-phone.svg" alt="{{$product->product_name}}">
+                            @endif
                         </div>
                         <div class="content">
                             <h4>{{$product->product_name}}</h4>

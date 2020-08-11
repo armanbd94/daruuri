@@ -101,7 +101,7 @@
                             
                         </div>
                         <input type="hidden" name="hidden_page" class="form-control" id="hidden_page" value="1" />
-                        <div id="loading" class="row" style="height: 100vh;background: white;">
+                        <div id="product_loading" class="row" style="height: 100vh;background: white;">
                             <div class="col-md-12  text-center py-5">
                                 <img src="svg/table-loading.svg" alt="Loading.."/>
                             </div>
@@ -184,12 +184,13 @@ $(document).ready(function(){
                 dataType: "JSON",
                 beforeSend: function () {
                     $('#product-list').html('');
-                    $('#loading').show();
+                    $('#product_loading').show();
                 },
                 complete: function () {
-                    $('#loading').hide();
+                    $('#product_loading').hide();
                 },
                 success: function (data) {
+                    
                     $('#product-list').html(data);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {

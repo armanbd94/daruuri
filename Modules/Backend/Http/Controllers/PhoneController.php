@@ -107,7 +107,7 @@ class PhoneController extends BaseController
                 if($request->has('service')){
                     foreach($request->service as $key => $value)
                     {
-                        $rules['service.'.$key.'.price']              = ['required','numeric','min:1'];
+                        $rules['service.'.$key.'.price']              = ['required','numeric'];
                         $message['service.'.$key.'.price.required']   = 'The price field is required';
                         $message['service.'.$key.'.price.numeric']    = 'The price field value must be numeric';
                         $services[$value['service_id']] = [

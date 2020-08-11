@@ -400,8 +400,10 @@ function disable_price(id)
 {
     if($("#"+id+"_service").prop("checked") == true){
         $("#service_"+id+"_price").prop("disabled",false);
+        $("#service_"+id+"_price").val("0.00");
     }else{
         $("#service_"+id+"_price").prop("disabled",true);
+        $("#service_"+id+"_price").val("");
     }
 }
 </script>

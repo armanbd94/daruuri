@@ -75,6 +75,7 @@
     left: 0;
     z-index: 999999;
     padding-top: 50px;
+    overflow-y: scroll;
 }
 #service_modal{
     width: 90vw;
@@ -259,6 +260,12 @@
                     type: "POST",
                     data:{phone_id:phone_id,_token:_token},
                     dataType: "JSON",
+                    beforeSend: function () {
+                        $('#search-btn').addClass('kt-spinner kt-spinner--md kt-spinner--light');
+                    },
+                    complete: function () {
+                        $('#search-btn').removeClass('kt-spinner kt-spinner--md kt-spinner--light');
+                    },
                     success: function (data) {
                         $('.service-modal-section').removeClass('d-none');
                         $('.service-modal-section .card-body').html('');

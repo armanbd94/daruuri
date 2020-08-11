@@ -44,7 +44,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control text-right price_box" name="service[{{$service->id}}][price]" id="service_{{$service->id}}_price">
+                                                <input type="text" class="form-control text-right price_box" name="service[{{$service->id}}][price]" id="service_{{$service->id}}_price" value="0.00">
                                             </td>
                                         </tr>
                                         @endforeach

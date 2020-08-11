@@ -72,6 +72,7 @@
     left: 0;
     z-index: 999999;
     padding-top: 50px;
+    overflow-y: scroll;
 }
 #service_modal{
     width: 90vw;
@@ -83,6 +84,48 @@
     font-size: 15px;
     cursor: pointer;
 }
+.kt-spinner {
+    position: relative;
+}
+
+.kt-spinner:before {
+    content: '';
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    border-radius: 50%;
+}
+
+.kt-spinner:before {
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+}
+.kt-spinner:before {
+    -webkit-animation: kt-spinner .5s linear infinite;
+    animation: kt-spinner .5s linear infinite;
+}
+
+.kt-spinner.kt-spinner--light:before {
+    border: 2px solid #ffffff;
+    border-right: 2px solid transparent;
+}
+@-webkit-keyframes kt-spinner {
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes kt-spinner {
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
 </style>
 @endpush
 
@@ -160,6 +203,12 @@
                     type: "POST",
                     data:{phone_id:phone_id,_token:_token},
                     dataType: "JSON",
+                    beforeSend: function () {
+                        $('#search-btn').addClass('kt-spinner kt-spinner--md kt-spinner--light');
+                    },
+                    complete: function () {
+                        $('#search-btn').removeClass('kt-spinner kt-spinner--md kt-spinner--light');
+                    },
                     success: function (data) {
                         $('.service-modal-section').removeClass('d-none');
                         $('.service-modal-section .card-body').html('');
