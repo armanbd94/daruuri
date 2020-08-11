@@ -13,6 +13,6 @@ class BackendDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call("PageSeederTableSeeder");
+
     }
 }

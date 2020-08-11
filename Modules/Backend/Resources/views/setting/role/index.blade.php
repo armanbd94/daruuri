@@ -24,9 +24,12 @@
     </div>
     <div class="kt-subheader__toolbar">
         <div class="kt-subheader__wrapper">
-            <a href="{{route('admin.role.create')}}" type="button" class="btn btn-brand btn-icon-sm btn-sm">
+            @if (permission('role-add'))
+               <a href="{{route('admin.role.create')}}" type="button" class="btn btn-brand btn-icon-sm btn-sm">
                 <i class="fas fa-plus-square"></i> Add New
-            </a>
+            </a> 
+            @endif
+            
         </div>
     </div>
 </div>
@@ -75,11 +78,13 @@
                     <table class="table table-striped table-bordered table-hover table-checkable" id="dataTable">
                         <thead>
                             <tr>
+                                @if (permission('role-bulk-action-delete'))
                                 <th>
                                     <label class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid">
                                         <input type="checkbox" class="selectall" onchange="select_all()">&nbsp;<span></span>
                                     </label>
                                 </th>
+                                @endif
                                 <th>SR</th>
                                 <th>Role Name</th>
                                 <th>Action</th>
@@ -93,9 +98,6 @@
     </div>
     <!--end::Portlet-->
 
-    <!--Begin:: Modal-->
-    @include('backend::setting.role.modal')
-    <!--End:: Modal-->
 </div>
 @endsection
 
@@ -139,18 +141,23 @@ $(document).ready(function () {
         //Set column definition initialisation properties.
         "columnDefs": [
             {
+                @if (permission('role-bulk-action-delete'))
                 "targets": [0,3],
+                @else
+                "targets": [2],
+                @endif
                 "orderable": false, //set not orderable
                 "className": "text-center",
             }
         ],
+        @if (permission('role-report'))
         "dom": 'lTgBfrtip',
         "buttons": [
             'colvis',
             {
                 "extend": 'csv',
                 "title": "{{ucwords($sub_title)}}",
-                "filename": 'brand-report',
+                "filename": 'role-report',
                 "exportOptions": {
                      columns: ':visible'
                 }
@@ -158,7 +165,7 @@ $(document).ready(function () {
             {
                 "extend": 'excel',
                 "title": "{{ucwords($sub_title)}}",
-                "filename": 'brand-report',
+                "filename": 'role-report',
                 "exportOptions": {
                      columns: ':visible'
                 }
@@ -166,7 +173,7 @@ $(document).ready(function () {
             {
                 "extend": 'pdf',
                 "title": "{{ucwords($sub_title)}}",
-                "filename": 'brand-report',
+                "filename": 'role-report',
                 "orientation": 'portrait', //landscape
                 "pageSize": 'A4', //A3 , A5 , A6 , legal , letter
                 "exportOptions": {
@@ -198,6 +205,7 @@ $(document).ready(function () {
                 }
             }
         ],
+        @endif
 
     });
     /** END:: DATATABLE SERVER SIDE CODE **/
@@ -214,8 +222,10 @@ $(document).ready(function () {
     /** END:: DATATABLE SEARCH FORM BUTTON TRIGGER CODE **/
 
     /** BEGIN:: DATATABLE APPEND DELETE ALL BUTTON **/
-    let button = `<button class="btn btn-sm btn-label-danger btn-bold ml-1" type="button" id="bulk_action_delete"><i class="kt-nav__link-icon flaticon2-trash"></i> Delete All</button>`;
+    @if (permission('role-bulk-action-delete'))
+    let button = `<button class="btn btn-sm btn-danger btn-bold ml-1" type="button" id="bulk_action_delete"><i class="kt-nav__link-icon flaticon2-trash"></i> Delete All</button>`;
     $('#dataTable_wrapper .dt-buttons').append(button);
+    @endif
     /** END:: DATATABLE APPEND DELETE ALL BUTTON  **/
 
 

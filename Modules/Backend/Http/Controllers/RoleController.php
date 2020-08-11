@@ -61,7 +61,7 @@ class RoleController extends BaseController
                     $action .= '<li class="kt-nav__item"><a href="'.route("admin.role.edit",["role" => $value->id]).'" class="kt-nav__link">'.EDIT_ICON.'</a></li>';
                     }
                     if (permission('role-view')) {
-                    $action .= '<li class="kt-nav__item"><a class="kt-nav__link view_data" data-id="' . $value->id . '" >'.VIEW_ICON.'</a></li>';
+                    $action .= '<li class="kt-nav__item"><a href="'.route("admin.role.show",["role" => $value->id]).'" class="kt-nav__link" >'.VIEW_ICON.'</a></li>';
                     }
                     if (permission('role-delete')) {
                     $action .= '<li class="kt-nav__item"><a class="kt-nav__link delete_data" data-id="'.$value->id .'" >'.DELETE_ICON.'</a></li>';
@@ -130,10 +130,10 @@ class RoleController extends BaseController
                     $collection = collect($request->all())->only('role');
                     $result = $this->model->updateOrCreate(['id' => $request->update_id],$collection->all());
                     if($result){
-                        $role_module = $this->model->with('roleModulePermission')->find($result->id);
-                        $role_module->roleModulePermission()->sync($request->module);
-                        $role_method = $this->model->with('roleMethodPermission')->find($result->id);
-                        $role_method->roleMethodPermission()->sync($request->method);
+                        $role = $this->model->with(['roleModulePermission','roleMethodPermission'])->find($result->id);
+                        $role->roleModulePermission()->sync($request->module);
+                        // $role_method = $this->model->with('roleMethodPermission')->find($result->id);
+                        $role->roleMethodPermission()->sync($request->method);
                         $output = $this->success_status();
                     }else{
                         $output = $this->error_status();
@@ -149,9 +149,28 @@ class RoleController extends BaseController
      * @param int $id
      * @return Response
      */
-    public function show($id)
+    public function show(Role $role)
     {
-        return view('backend::show');
+        if (permission('role-view')) {
+            $this->setPageData('Role Details', 'Role Details', 'fas fa-eye');
+            $permissions = Module::doesntHave('parent')
+            ->select('id','module_name','module_sequence')
+            ->orderBy('module_sequence','asc')
+            ->with('method:id,module_id,method_name','submenu:id,parent_id,module_name')
+            ->get();
+            $role_modules = [];
+            foreach ($role->roleModulePermission as  $value) {
+                array_push($role_modules,$value->id);
+            }
+            $role_methods = [];
+            foreach ($role->roleMethodPermission as  $value) {
+                array_push($role_methods,$value->id);
+            }
+            $keywords = $this->permission_reserved_keywords;
+            return view('backend::setting.role.view',compact('role','permissions','keywords','role_modules','role_methods'));
+        }else{
+            return redirect()->route('admin.role')->with(['status'=>'error','message'=>'Unauthorized Access Blocked']);
+        }
     }
 
     /**
@@ -184,9 +203,53 @@ class RoleController extends BaseController
     }
 
     
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        if($request->ajax()){
+            if(permission('role-delete')){
+                $role = $this->model->with(['roleModulePermission','roleMethodPermission'])->find($request->id);
+                if($role){
+                    $delete_role_modules = $role->roleModulePermission()->detach();
+                    $delete_role_methods = $role->roleMethodPermission()->detach();
+                    if($delete_role_modules && $delete_role_methods){
+                        $role->delete();
+                        $output = $this->success_status();
+                    }else{
+                        $output = $this->error_status();
+                    }
+                }else{
+                    $output = $this->error_status();
+                }
+                return response()->json($output);
+            }
+        }
+    }
+
+    public function bulk_action_delete(Request $request)
+    {
+        if($request->ajax()){
+            if(permission('role-bulk-action-delete')){
+                try {
+                    
+                    $delete_role_methods = RoleMethodPermission::whereIn('role_id',$request->id)->delete();
+                    $delete_role_modules = RoleModulePermission::whereIn('role_id',$request->id)->delete(); 
+                    if($delete_role_modules && $delete_role_methods){
+                        $result = $this->model->destroy($request->id);
+                        if($result){
+                            $output = $this->success_status();
+                        }else{
+                            $output = $this->error_status();
+                        }
+                    }else{
+                        $output = $this->error_status();
+                    }
+                    
+                } catch (\Throwable $e) {
+                    $output = ['status' => 'error','message'=> $e->getMessage()];
+                }
+                return response()->json($output);
+            }
+        }
     }
 
 

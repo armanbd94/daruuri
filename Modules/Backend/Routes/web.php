@@ -46,6 +46,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('create', 'RoleController@create')->name('create');
             Route::post('store', 'RoleController@store')->name('store');
             Route::get('edit/{role}', 'RoleController@edit')->name('edit');
+            Route::get('show/{role}', 'RoleController@show')->name('show');
             Route::post('delete', 'RoleController@destroy')->name('delete');
             Route::post('bulk-action-delete', 'RoleController@bulk_action_delete')->name('bulkaction');
         });
