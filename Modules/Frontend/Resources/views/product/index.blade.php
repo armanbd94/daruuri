@@ -72,7 +72,7 @@
                     <div class="col-lg-3 sidebar-area sidebar-right">
                         <div class=" split-nav-menu clearfix widget widget_search">
                             <form  method="post" class="search-form">
-                                <input type="search" class="form-control search-field" placeholder="Search Phone" name="phone" id="phone">
+                                <input type="search" class="form-control search-field" placeholder="Search.." name="phone" id="phone">
                                 <button type="button" class="search-submit"  style="cursor: pointer;"><i class="fa fa-search"></i></button>
                             </form>
                         </div>
@@ -93,7 +93,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-sm-9" id="product_section">
+                    <div class="col-lg-9" id="product_section">
                         <div class="widget widget_categories">
                             <h4 style="font-size: 1.5rem !important;" class="widget-title widget-title-line-bottom line-bottom-theme-colored1">Products</h4>
                         </div>

@@ -239,7 +239,8 @@ $(document).ready(function () {
 
     /** BEGIN:: DATATABLE APPEND DELETE ALL BUTTON **/
     @if (permission('brand-bulk-action-delete'))
-    let button = `<button class="btn btn-sm btn-danger btn-bold ml-1" type="button" id="bulk_action_delete"><i class="kt-nav__link-icon flaticon2-trash"></i> Delete All</button>`;
+    let button = `<button class="btn btn-sm btn-danger btn-bold ml-1" type="button" 
+    id="bulk_action_delete"><i class="kt-nav__link-icon flaticon2-trash"></i> Delete All</button>`;
     $('#dataTable_wrapper .dt-buttons').append(button);
     @endif
     /** END:: DATATABLE APPEND DELETE ALL BUTTON  **/

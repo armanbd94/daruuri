@@ -914,12 +914,6 @@
 			}
 		},
 
-		/* ---------------------------------------------------------------------- */
-		/* ----------------------------- Fit Vids ------------------------------- */
-		/* ---------------------------------------------------------------------- */
-		TM_fitVids: function() {
-			$body.fitVids();
-		},
 
 
 
@@ -3327,7 +3321,6 @@
 				THEMEMASCOT.header.TM_VC_Boxed_Fullwidth_Fit_Container();
 				THEMEMASCOT.initialize.TM_portfolioStickyScrollMagic();
 				THEMEMASCOT.initialize.TM_shopSingleStickyScrollMagic();
-				THEMEMASCOT.initialize.TM_fitVids();
 			}, 0);
 			$window.trigger("scroll");
 			$window.trigger("resize");
