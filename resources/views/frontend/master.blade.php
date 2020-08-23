@@ -69,6 +69,44 @@
         transform: rotateY(360deg);
       }
     }
+    @media only screen and (min-width:1200px) {
+        .menuzord-menu li {
+            padding: 18px 0 !important;
+            height: 80px !important;
+        }
+        .menuzord-menu li ul li{
+            height: auto !important;
+            padding: 0px !important;
+        }
+
+    }
+    .header-nav .header-nav-col-row> :first-child {
+        padding-left: 15px !important;
+        height: 80px !important;
+    }
+
+    .menuzord-brand {
+        margin: 10px 30px 20px 0 !important;
+        float: left !important;
+        color: #666 !important;
+        text-decoration: none !important;
+        font-size: 24px !important;
+        font-weight: 600 !important;
+        line-height: 1.3 !important;
+        cursor: pointer !important;
+    }
+
+    @media only screen and (max-width: 767px){
+      .footer-paragraph{
+        text-align: center !important;
+      }
+    }
+    @media only screen and (max-width: 1199.99px){
+      #contact_form_section{
+        margin-top: -30px;
+      }
+    }
+
     </style>
 </head>
 
@@ -94,8 +132,12 @@
         <a class="scrollToTop" href="javascript:void(0);"><i class="fa fa-angle-up"></i></a>
     </div>
      <!-- external javascripts -->
-     <script src="js/frontend.js"></script>
+     <script src="js/frontend/jquery.js"></script>
+     <script src="js/backend/popper.js"></script>
+    <script src="js/frontend/bootstrap.min.js"></script>
+
      <script src="js/frontend/javascript-plugins-bundle.js"></script>
+     <script src="js/frontend/menuzord.js"></script>
      <!-- JS | Custom script for all pages -->
      <script src="js/frontend/custom.js"></script>
      @stack('script')

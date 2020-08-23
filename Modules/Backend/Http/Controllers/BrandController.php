@@ -54,7 +54,8 @@ class BrandController extends BaseController
                     }
                     $btngroup = '<span style="overflow: visible; position: relative;">   
                                     <div class="dropdown"> 
-                                        <a data-toggle="dropdown" class="btn btn-sm btn-clean btn-icon btn-icon-lg cursor-pointer"> <i class="flaticon-more-1 text-brand"></i> </a>
+                                        <a data-toggle="dropdown" class="btn btn-sm btn-clean btn-icon btn-icon-lg cursor-pointer"> 
+                                        <i class="flaticon-more-1 text-brand"></i> </a>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <ul class="kt-nav">
                                                 '.$action.'
@@ -66,7 +67,9 @@ class BrandController extends BaseController
         
                     $row    = array();
                     if (permission('brand-bulk-action-delete')) {
-                    $row[]  = '<label class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid"><input type="checkbox" name="did[]" value="' . $value->id . '" class="select_data select_item_' . $value->id . '" onchange="select_single_item(' . $value->id . ')">&nbsp;<span></span></label> ';
+                    $row[]  = '<label class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid">
+                    <input type="checkbox" name="did[]" value="' . $value->id . '" class="select_data select_item_' . $value->id . '" 
+                    onchange="select_single_item(' . $value->id . ')">&nbsp;<span></span></label> ';
                     }
                     $row[]  = $no;
                     $row[]  = $value->brand_name;
@@ -75,7 +78,8 @@ class BrandController extends BaseController
                     $data[] = $row;
         
                 }
-                $output = $this->dataTableDraw($request->input('draw'),$this->model->count_all(),$this->model->count_filtered(), $data);
+                $output = $this->dataTableDraw($request->input('draw'),$this->model->count_all(),
+                $this->model->count_filtered(), $data);
                 echo json_encode($output);
             }
         }

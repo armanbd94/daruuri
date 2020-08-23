@@ -15,7 +15,7 @@
                         <div class="tm-sc tm-sc-custom-columns-holder-item section-typo-light bg-theme-colored2"
                             data-item-class="econsul-mascot-custom-columns-924797"
                             data-1200-up="80px 25% 100px 10%"
-                            data-1199-down="80px 10% 100px 10%">
+                            data-1199-down="80px 10% 100px 10%" id="contact_form_section">
                             <div class="item-inner">
                                 <div class="item-content econsul-mascot-custom-columns-924797">
                                     <h2>Send Us Message</h2>

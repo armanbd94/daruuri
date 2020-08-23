@@ -18,7 +18,7 @@ class HomeController extends FrontendBaseController
     {
         $this->setPageData('Home','Home');
         $data['sliders']  = Slider::allSliderImages();
-        $data['products'] = Product::with('brand:id,brand_name')->where('status',1)->orderBy('id','desc')->take(8)->get();
+        $data['products'] = Product::with('brand:id,brand_name')->where('status',1)->inRandomOrder()->limit(8)->get();
         return view('frontend::home.home',compact('data'));
     }
 

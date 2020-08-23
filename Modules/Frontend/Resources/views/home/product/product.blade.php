@@ -1,5 +1,5 @@
 <section>
-    <div class="container pt-90">
+    <div class="container pt-50">
         <div class="section-title">
             <div class="row justify-content-md-center">
                 <div class="col-md-8">

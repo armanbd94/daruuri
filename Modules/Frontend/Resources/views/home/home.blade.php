@@ -90,7 +90,7 @@
 .product-card{
     position: relative;
     width: 90%;
-    height: 220px;
+    height: 330px;
     background: #fff;
     margin: 30px 5%;
     padding: 20px 0;
@@ -98,9 +98,9 @@
     transition: 0.3s ease-in-out;
     
 }
-.product-card:hover{
+/* .product-card:hover{
     height: 340px;
-}
+} */
 .product-card .img-box{
     position: relative;
     width: 70%;
@@ -117,19 +117,22 @@
 }
 .product-card .content{
     position: relative;
-    margin-top: -120px;
+    visibility: visible;
+    opacity: 1;
+    margin-top: -60px;
+    /* margin-top: -120px; */
     padding: 10px 15px;
     text-align: center;
-    visibility: hidden;
+    /* visibility: hidden;
     opacity: 0;
-    transition: 0.3s ease-in-out
+    transition: 0.3s ease-in-out */
 }
-.product-card:hover .content{
+/* .product-card:hover .content{
     visibility: visible;
     opacity: 1;
     margin-top: -60px;
     transition-delay: 0.3s;
-}
+} */
 .product-card .content h4{
     font-size: 15px;
 }
@@ -194,20 +197,18 @@
     <!-- Section: Service Search Form Component-->
    <x-frontend.search-form/>
 
-    <!-- Section: Analysis -->
-    @include('frontend::home.analysis.analysis')
-
     <!-- Section: About -->
-    <x-frontend.about padding="pt-0"/>
+    <x-frontend.about/>
+
+     <!-- Section: Our Products -->
+     @include('frontend::home.product.product')
 
     <!-- Section: Service -->
     @include('frontend::home.service.service')
 
     <!-- Section: Who We Are -->
     @include('frontend::home.who-we-are.who-we-are')
-
-    <!-- Section: Our Products -->
-    @include('frontend::home.product.product')
+   
 
     <!-- Section: How We Works -->
     @include('frontend::home.how-we-works.how-we-works')

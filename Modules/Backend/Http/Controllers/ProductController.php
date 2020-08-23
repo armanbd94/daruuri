@@ -83,7 +83,7 @@ class ProductController extends BaseController
                     $row[]  = '<label class="kt-checkbox kt-checkbox--single kt-checkbox--all kt-checkbox--solid"><input type="checkbox" name="did[]" value="' . $value->id . '" class="select_data select_item_' . $value->id . '" onchange="select_single_item(' . $value->id . ')">&nbsp;<span></span></label> ';
                     }
                     $row[]  = $no;
-                    $row[]  = "<img src='storage/".PRODUCT.$value->product_image."' alt='".$value->product_name."' style='width:50px;'/>";
+                    $row[]  = $this->image($value->product_image,$value->product_name);
                     $row[]  = $value->product_name;
                     $row[]  = $value->brand->brand_name;
                     $row[]  = $value->category->category_name;
@@ -96,6 +96,10 @@ class ProductController extends BaseController
                 echo json_encode($output);
             }
         }
+    }
+
+    private function image($image,$name){
+        return !empty($image) ?  "<img src='storage/".PRODUCT.$image."' alt='".$name."' style='width:50px;'/>" :  "<img src='svg/no-phone.svg' alt='".$name."' style='width:50px;'/>";
     }
 
     public function store(Request $request)

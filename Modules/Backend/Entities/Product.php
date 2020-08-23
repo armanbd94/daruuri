@@ -15,7 +15,7 @@ class Product extends Model
         'brand_id'      => ['nullable','integer'],
         'category_id'   => ['required','integer'],
         'product_name'  => ['required','string','unique:products,product_name'],
-        'product_image' => ['required','image','mimes:svg,png,jpg,jpeg'],
+        'product_image' => ['required','image','mimes:svg,png,jpg,jpeg,webp'],
         'description'   => ['nullable','string'],
         'status'        => ['required','integer']
     ];

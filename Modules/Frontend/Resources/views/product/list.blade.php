@@ -7,7 +7,7 @@
         @endif
         @if (!empty($brand_name))
         <h4 class="text-left" style="color: #1bacd6;font-weight:bold;">
-            Filter Result for <b class="text-danger">"{{$brand_name}}"</b>
+            Filtered Result for <b class="text-danger">"{{$brand_name}}"</b>
         </h4>
         @endif
         <b>Showing {{$products->firstItem()}} to {{$products->lastItem()}} of {{$products->total()}} result</b>

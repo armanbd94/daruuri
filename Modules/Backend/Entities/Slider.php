@@ -15,7 +15,7 @@ class Slider extends Model
     public const VALIDATION_RULES = [
         'title'       => ['required','string'],
         'sub_title'   => ['required','string'],
-        'image'       => ['required','image','mimes:svg,png,jpg,jpeg'],
+        'image'       => ['required','image','mimes:svg,png,jpg,jpeg,webp'],
         'button_link' => ['nullable','string'],
         'sorting'     => ['required','integer']
     ];

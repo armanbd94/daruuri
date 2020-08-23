@@ -29,7 +29,7 @@
                         class="split-nav-menu clearfix widget widget-blog-list clearfix">
                         <h4
                             class="widget-title widget-title-line-bottom line-bottom-footer-widget line-bottom-theme-colored1">
-                            Latest News</h4>
+                            Contact</h4>
                         <div class="tm-widget tm-widget-blog-list ">
                             <!-- the loop -->
                             <article class="post media-post clearfix"> <a class="post-thumb" href="#"><img
@@ -122,7 +122,7 @@
             <div class="container">
                 <div class="row pt-20 pb-20">
                     <div class="col-sm-6">
-                        <div class="footer-paragraph">
+                        <div class="footer-paragraph text-left">
                             © {{date('Y')}}. All Rights Reserved Daruuri
                         </div>
                     </div>

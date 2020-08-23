@@ -12,7 +12,7 @@
     .product-card{
         position: relative;
         width: 90%;
-        height: 220px;
+        height: 330px;
         background: #fff;
         margin: 30px 5%;
         padding: 20px 0;
@@ -20,9 +20,9 @@
         transition: 0.3s ease-in-out;
         
     }
-    .product-card:hover{
+    /* .product-card:hover{
         height: 340px;
-    }
+    } */
     .product-card .img-box{
         position: relative;
         width: 70%;
@@ -39,19 +39,22 @@
     }
     .product-card .content{
         position: relative;
-        margin-top: -120px;
+        visibility: visible;
+    opacity: 1;
+    margin-top: -60px;
+        /* margin-top: -120px; */
         padding: 10px 15px;
         text-align: center;
-        visibility: hidden;
+        /* visibility: hidden;
         opacity: 0;
-        transition: 0.3s ease-in-out
+        transition: 0.3s ease-in-out */
     }
-    .product-card:hover .content{
+    /* .product-card:hover .content{
         visibility: visible;
         opacity: 1;
         margin-top: -60px;
         transition-delay: 0.3s;
-    }
+    } */
     .product-card .content h4{
         font-size: 15px;
     }
@@ -72,7 +75,7 @@
                     <div class="col-lg-3 sidebar-area sidebar-right">
                         <div class=" split-nav-menu clearfix widget widget_search">
                             <form  method="post" class="search-form">
-                                <input type="search" class="form-control search-field" placeholder="Search Phone" name="phone" id="phone">
+                                <input type="search" class="form-control search-field" placeholder="Search.." name="phone" id="phone">
                                 <button type="button" class="search-submit"  style="cursor: pointer;"><i class="fa fa-search"></i></button>
                             </form>
                         </div>
@@ -93,7 +96,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-sm-9" id="product_section">
+                    <div class="col-lg-9" id="product_section">
                         <div class="widget widget_categories">
                             <h4 style="font-size: 1.5rem !important;" class="widget-title widget-title-line-bottom line-bottom-theme-colored1">Products</h4>
                         </div>
@@ -152,6 +155,9 @@ $(document).ready(function(){
         }
     });
 
+    /********************************** 
+    * * Ajax Pagination Data **
+    ************************************/
     $(document).on('click', '.pagination a', function(event){
         event.preventDefault();
         var page = $(this).attr('href').split('page=')[1];

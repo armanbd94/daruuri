@@ -13,7 +13,7 @@ class HighlightedService extends Model
     ********************************/
     public const VALIDATION_RULES = [
         'service_name'=> ['required','string','unique:highlighted_services,service_name'],
-        'image'       => ['required','image','mimes:svg,png,jpg,jpeg'],
+        'image'       => ['required','image','mimes:svg,png,jpg,jpeg,webp'],
         'description' => ['nullable','string'],
         'sorting'     => ['required','integer']
     ];

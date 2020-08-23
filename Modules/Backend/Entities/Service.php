@@ -16,7 +16,7 @@ class Service extends Model
     ********************************/
     public const VALIDATION_RULES = [
         'service_name' => ['required','string','unique:services,service_name'],
-        'service_icon' => ['required','image','mimes:svg,png'],
+        'service_icon' => ['required','image','mimes:svg,png,jpg,jpeg,webp'],
         'status'       => ['required','integer']
     ];
     /*******************************
