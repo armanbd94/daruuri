@@ -144,21 +144,30 @@
                     @foreach ($services as $key => $service)
                     <div class="row pb-5">
                         <div class="col-xs-12 col-sm-12 col-md-12 pull-left flip">
-                            <div class="row">
+                            <div class="row" id="content-text">
+                                <style>
+                                    #content-text p{
+                                        margin-bottom: 0 !important;
+                                    }
+                                    #content-text ul li::marker{
+                                        color: #1bacd6 !important;
+                                        font-size: 20px;
+                                    }
+                                </style>
                                 @if (($key/2) == 0)
                                 <div class="col-md-5">
                                     <img alt="{{$service->title}}"  class="lazyload" src="svg/spinner.svg" data-src="storage/{{PAGE.$service->image}}" style="width: 100%;border: 5px solid #1bacd6;
                                     box-shadow: 0px 3px 7px rgba(0,0,0,0.5);">
                                 </div>
-                                <div class="col-md-7">
+                                <div class="col-md-7 text-justify">
                                     <h3 class="mb-10">{{$service->title}}</h3>
-                                    <p>{{$service->description}}</p>
+                                   {!! $service->description !!}
                                 </div>
                                 @else
                                 
-                                <div class="col-md-7">
+                                <div class="col-md-7 text-justify">
                                     <h3 class="mb-10">{{$service->title}}</h3>
-                                    <p>{{$service->description}}</p>
+                                    {!! $service->description !!}
                                 </div>
                                 <div class="col-md-5">
                                     <img alt="{{$service->title}}"  class="lazyload" src="svg/spinner.svg" data-src="storage/{{PAGE.$service->image}}" style="width: 100%;border: 5px solid #1bacd6;

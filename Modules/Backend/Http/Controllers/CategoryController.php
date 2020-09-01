@@ -70,6 +70,7 @@ class CategoryController extends BaseController
                     }
                     $row[]  = $no;
                     $row[]  = $value->category_name;
+                    $row[]  = $value->sorting;
                     $row[]  = BUTTON_STATUS[$value->status];
                     $row[]  = $btngroup;
                     $data[] = $row;
@@ -89,6 +90,7 @@ class CategoryController extends BaseController
                 $rules = $this->model::VALIDATION_RULES;
                 if(!empty($request->update_id)){
                     $rules['category_name'][2] = 'unique:categories,category_name,'.$request->update_id;
+                    $rules['category_slug'][2] = 'unique:categories,category_slug,'.$request->update_id;
                 }
                 $validator = Validator::make($request->all(), $rules);
                 if ($validator->fails()) {

@@ -97,6 +97,7 @@
                                 @endif
                                 <th>SR</th>
                                 <th>Category Name</th>
+                                <th>Sorting Order</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -157,9 +158,9 @@ $(document).ready(function () {
         "columnDefs": [
             {
                 @if (permission('category-bulk-action-delete')) 
-                "targets": [0,4],
+                "targets": [0,5],
                 @else
-                "targets": [3],
+                "targets": [4],
                 @endif
                 "orderable": false, //set not orderable
                 "className": "text-center",
@@ -277,6 +278,7 @@ $(document).ready(function () {
                 $('#saveDataForm #update_id').val(data.category.id);
                 $('#saveDataForm #category_name').val(data.category.category_name);
                 $('#saveDataForm #category_slug').val(data.category.category_slug);
+                $('#saveDataForm #sorting').val(data.category.sorting);
                 $('#saveDataForm select[name="status"]').val(data.category.status);
                 $('#saveDataForm .selectpicker').selectpicker('refresh');
                 $('#saveDataModal').modal({

@@ -12,7 +12,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label" for="description">Description</label>
-                <textarea class="form-control" type="text" placeholder="Enter description" id="description"
+                <textarea class="form-control description" type="text" placeholder="Enter description" id="description"
                     name="description" >{{ $data['software']->description }}</textarea>
             </div>
             

@@ -137,7 +137,7 @@
                                     <div id="collapse{{$key+1}}" class="panel-collapse collapse" role="tabpanel"
                                         aria-labelledby="heading{{$key+1}}">
                                         <div class="panel-body">
-                                            <p>{{$value->answer}}</p>
+                                            <p class="content-text text-justify">{{$value->answer}}</p>
                                         </div>
                                     </div>
                                 </div>

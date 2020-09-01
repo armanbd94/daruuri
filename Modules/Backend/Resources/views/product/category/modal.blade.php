@@ -14,6 +14,7 @@
                         <x-backend.form.text-box label="Category Name" col="col-md-12"  name="category_name" 
                         onkeyup="url_generator(this.value, 'category_slug')" required="required" placeholder="Enter category name"/>
                         <x-backend.form.text-box label="Category Slug" col="col-md-12" name="category_slug" required="required" placeholder="Enter category name"/>
+                        <x-backend.form.text-box label="Sorting No" col="col-md-12" name="sorting" required="required" placeholder="Enter sorting number"/>
                         <x-backend.form.select-box label="Status" col="col-md-12" name="status" required="required">
                             @foreach (TEXT_STATUS as $id => $text)
                             <option value="{{$id}}">{{$text}}</option>

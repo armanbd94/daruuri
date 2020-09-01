@@ -104,6 +104,42 @@
 
 
 @push('script')
+<script src="https://cdn.tiny.cloud/1/b8jn5oxw2wsq20pm7uc2nnu56ea992nztzxossmob6lhj56j/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script type="text/javascript">
+
+    tinymce.init({
+
+        selector: 'textarea.description',
+
+        height: 300,
+
+        menubar: false,
+
+        plugins: [
+
+            'advlist autolink lists link image charmap print preview anchor',
+
+            'searchreplace visualblocks code fullscreen',
+
+            'insertdatetime media table paste code help wordcount'
+
+        ],
+
+        toolbar: 'undo redo | formatselect | ' +
+
+            'bold italic backcolor | alignleft aligncenter ' +
+
+            'alignright alignjustify | bullist numlist outdent indent | ' +
+
+            'removeformat | help',
+
+        content_css: '//www.tiny.cloud/css/codepen.min.css'
+
+    });
+
+</script>
+
 <script>
 loadFile = function(event, id) {
     var output = document.getElementById(id);

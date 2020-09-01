@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Cache;
 
 class Category extends Model
 {
-    protected $fillable           = ['category_name','category_slug','status'];
+    protected $fillable           = ['category_name','category_slug','sorting','status'];
 
     protected const CACHE_NAME    = '_categories';
 
@@ -17,6 +17,7 @@ class Category extends Model
     public const VALIDATION_RULES = [
         'category_name' => ['required','string','unique:categories,category_name'],
         'category_slug' => ['required','string','unique:categories,category_slug'],
+        'sorting'       => ['required','integer'],
         'status'        => ['required','integer']
     ];
     /*******************************
@@ -88,11 +89,11 @@ class Category extends Model
     private function _get_datatables_query()
     {
         if (permission('category-bulk-action-delete')) {
-            $this->column_order = array('','id', 'category_name', 'status', '');
+            $this->column_order = array('','id', 'category_name', 'sorting','status', '');
         }else{
             $this->column_order = array('id', 'category_name', 'status', '');
         }
-        $query = self::toBase()->select('id','category_name', 'status');
+        $query = self::toBase()->select('id','category_name', 'sorting','status');
 
         if (!empty($this->categoryName)) {
             $query->where('category_name', 'like','%'.$this->categoryName.'%');
@@ -145,7 +146,7 @@ class Category extends Model
 
     public static function allCategories(){
         return Cache::rememberForever(self::CACHE_NAME, function () {
-            return self::toBase()->select('id','category_name','category_slug')->where('status',1)->orderBy('id','asc')->get();
+            return self::toBase()->select('id','category_name','category_slug')->where('status',1)->orderBy('sorting','asc')->get();
         });
     }
 
