@@ -46,6 +46,7 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+ 
         if($user->status != 1){
             $this->guard()->logout();
             return back()->with('error', 'You account is disabled. Please contact with admin to enable account.');

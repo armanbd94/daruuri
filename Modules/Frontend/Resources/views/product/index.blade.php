@@ -25,8 +25,8 @@
     } */
     .product-card .img-box{
         position: relative;
-        width: 70%;
-        height: 220px;
+        width: 90%;
+        /* height: 220px; */
         top: -50px;
         margin: 0 auto;
         z-index: 1;
@@ -119,6 +119,7 @@
 @endsection
 
 @push('script')
+<script type="text/javascript" src="js/frontend/lazysizes.min.js"></script>
 <script>
 $(document).ready(function(){
     let _changeInterval = null;

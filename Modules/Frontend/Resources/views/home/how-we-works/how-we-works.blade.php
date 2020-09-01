@@ -31,7 +31,7 @@ data-tm-bg-img="images/bg/as02.jpg">
                             <div class="working-steps-item-inner">
                                 <div class="image-holder-wrapper">
                                     <div class="image-holder">
-                                        <div class="image-holder-inner"> <img src="images/photos/w1.jpg"
+                                        <div class="image-holder-inner"> <img class="lazyload" src="svg/spinner.svg" data-src="images/photos/w1.jpg"
                                                 alt="Image"></div>
                                         <div class="tag">A</div>
                                     </div>
@@ -50,7 +50,7 @@ data-tm-bg-img="images/bg/as02.jpg">
                             <div class="working-steps-item-inner">
                                 <div class="image-holder-wrapper">
                                     <div class="image-holder">
-                                        <div class="image-holder-inner"> <img src="images/photos/w2.jpg"
+                                        <div class="image-holder-inner"> <img  class="lazyload" src="svg/spinner.svg" data-src="images/photos/w2.jpg"
                                                 alt="Image"></div>
                                         <div class="tag">B</div>
                                     </div>
@@ -70,7 +70,7 @@ data-tm-bg-img="images/bg/as02.jpg">
                             <div class="working-steps-item-inner">
                                 <div class="image-holder-wrapper">
                                     <div class="image-holder">
-                                        <div class="image-holder-inner"> <img src="images/photos/w3.jpg"
+                                        <div class="image-holder-inner"> <img  class="lazyload" src="svg/spinner.svg" data-src="images/photos/w3.jpg"
                                                 alt="Image"></div>
                                         <div class="tag">C</div>
                                     </div>
@@ -90,7 +90,7 @@ data-tm-bg-img="images/bg/as02.jpg">
                             <div class="working-steps-item-inner">
                                 <div class="image-holder-wrapper">
                                     <div class="image-holder">
-                                        <div class="image-holder-inner"> <img src="images/photos/w4.jpg"
+                                        <div class="image-holder-inner"> <img  class="lazyload" src="svg/spinner.svg" data-src="images/photos/w4.jpg"
                                                 alt="Image"></div>
                                         <div class="tag">D</div>
                                     </div>

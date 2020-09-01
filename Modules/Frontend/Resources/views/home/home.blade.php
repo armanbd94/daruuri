@@ -6,7 +6,7 @@
 
 @push('style')
 <!-- REVOLUTION STYLE SHEETS -->
-<link rel="stylesheet" type="text/css" href="js/frontend/revolution-slider/css/rs6.css">
+{{-- <link rel="stylesheet" type="text/css" href="js/frontend/revolution-slider/css/rs6.css"> --}}
 <link href="css/bootstrap-select.css" rel="stylesheet" type="text/css" />
 <link href="css/toastr.min.css" rel="stylesheet" type="text/css" />
 <style>
@@ -103,8 +103,8 @@
 } */
 .product-card .img-box{
     position: relative;
-    width: 70%;
-    height: 220px;
+    width: 90%;
+    /* height: 220px; */
     top: -50px;
     margin: 0 auto;
     z-index: 1;
@@ -186,6 +186,34 @@
     font-size: 80%;
     color: #dc3545;
 }
+.caption-title{
+        font-size: 25px;
+    background: rgba(0,0,0,0.5);
+    max-width: 70% !important;
+    margin: 15px auto;
+    border-left: 5px solid #00c3ed;
+    border-right: 5px solid #00c3ed;
+    color: #00c3ed;
+    padding: 5px 0;
+}
+.caption-subtitle{
+    font-size: 35px;
+    color: white;
+    max-width: 100% !important;
+    margin: 0 auto 50px auto;
+    font-weight:bold;
+}
+.carousel-caption {
+    position: absolute;
+    right: 15%;
+    bottom: 30% !important;
+    left: 15%;
+    z-index: 10;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #fff;
+    text-align: center;
+}
 </style>
 @endpush
 
@@ -224,69 +252,72 @@
 @push('script')
  <!-- REVOLUTION JS FILES -->
  
- <script type="text/javascript" src="js/frontend/revolution-slider/js/revolution.tools.min.js"></script>
- <script type="text/javascript" src="js/frontend/revolution-slider/js/rs6.min.js"></script>
- <script src="js/frontend/extra-rev-slider.js"></script>
+ {{-- <script type="text/javascript" src="js/frontend/revolution-slider/js/revolution.tools.min.js"></script>
+ <script type="text/javascript" src="js/frontend/revolution-slider/js/rs6.min.js"></script> --}}
+ <script type="text/javascript" src="js/frontend/lazysizes.min.js"></script>
  <script src="js/backend/bootstrap-select.js" type="text/javascript"></script>
  <script src="js/toastr.min.js" type="text/javascript"></script>
  <script type="text/javascript">
     var _token = "{{csrf_token()}}";
-    $(document).on('change','#phone_id', function(){
-        let phone_id = $("#phone_id").val();
-        if(phone_id){
-            $(".error").each(function () {
-                $(this).empty();//remove error text
-            });
-            $("#searchDataForm").find('.is-invalid').removeClass('is-invalid');
-        }else{
-            $("#phone_id").parent().addClass('is-invalid');
-            $("#phone_id").parent().after('<div class="error invalid-feedback"><i class="icon fas fa-question-circle"></i> Please choose a phone</div>');
-        }       
-    });
-    $(document).on('click','#search-btn', function(){
-        let brand_id = $("#brand_id").val();
-        let phone_id = $("#phone_id").val();
-        if(brand_id){
-            $(".error").each(function () {
-                    $(this).empty();//remove error text
-                });
-                $("#searchDataForm").find('.is-invalid').removeClass('is-invalid');
+    $(document).ready(function(){
+        $(document).on('change','#phone_id', function(){
+            let phone_id = $("#phone_id").val();
             if(phone_id){
                 $(".error").each(function () {
                     $(this).empty();//remove error text
                 });
                 $("#searchDataForm").find('.is-invalid').removeClass('is-invalid');
-                $.ajax({
-                    url: "{{route('phone.services')}}",
-                    type: "POST",
-                    data:{phone_id:phone_id,_token:_token},
-                    dataType: "JSON",
-                    beforeSend: function () {
-                        $('#search-btn').addClass('kt-spinner kt-spinner--md kt-spinner--light');
-                    },
-                    complete: function () {
-                        $('#search-btn').removeClass('kt-spinner kt-spinner--md kt-spinner--light');
-                    },
-                    success: function (data) {
-                        $('.service-modal-section').removeClass('d-none');
-                        $('.service-modal-section .card-body').html('');
-                        $('.service-modal-section .card-body').html(data);
-                        $('.selectpicker').val('').selectpicker('refresh');
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                    }
-                });
             }else{
                 $("#phone_id").parent().addClass('is-invalid');
                 $("#phone_id").parent().after('<div class="error invalid-feedback"><i class="icon fas fa-question-circle"></i> Please choose a phone</div>');
+            }       
+        });
+        $(document).on('click','#search-btn', function(){
+            let brand_id = $("#brand_id").val();
+            let phone_id = $("#phone_id").val();
+            if(brand_id){
+                $(".error").each(function () {
+                        $(this).empty();//remove error text
+                    });
+                    $("#searchDataForm").find('.is-invalid').removeClass('is-invalid');
+                if(phone_id){
+                    $(".error").each(function () {
+                        $(this).empty();//remove error text
+                    });
+                    $("#searchDataForm").find('.is-invalid').removeClass('is-invalid');
+                    $.ajax({
+                        url: "{{route('phone.services')}}",
+                        type: "POST",
+                        data:{phone_id:phone_id,_token:_token},
+                        dataType: "JSON",
+                        beforeSend: function () {
+                            $('#search-btn').addClass('kt-spinner kt-spinner--md kt-spinner--light');
+                        },
+                        complete: function () {
+                            $('#search-btn').removeClass('kt-spinner kt-spinner--md kt-spinner--light');
+                        },
+                        success: function (data) {
+                            $('.service-modal-section').removeClass('d-none');
+                            $('.service-modal-section .card-body').html('');
+                            $('.service-modal-section .card-body').html(data);
+                            $('.selectpicker').val('').selectpicker('refresh');
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                        }
+                    });
+                }else{
+                    $("#phone_id").parent().addClass('is-invalid');
+                    $("#phone_id").parent().after('<div class="error invalid-feedback"><i class="icon fas fa-question-circle"></i> Please choose a phone</div>');
+                }
+            }else{
+                $("#brand_id").parent().addClass('is-invalid');
+                $("#brand_id").parent().after('<div class="error invalid-feedback"><i class="icon fas fa-question-circle"></i> Please choose a brand</div>');
             }
-        }else{
-            $("#brand_id").parent().addClass('is-invalid');
-            $("#brand_id").parent().after('<div class="error invalid-feedback"><i class="icon fas fa-question-circle"></i> Please choose a brand</div>');
-        }
-        
+            
+        });
     });
+    
     function getPhoneList(brand_id){
         if(brand_id){
             $(".error").each(function () {

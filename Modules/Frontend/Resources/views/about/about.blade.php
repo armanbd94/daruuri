@@ -18,3 +18,7 @@
 </div>
 @endsection
 
+@push('script')
+<script type="text/javascript" src="js/frontend/lazysizes.min.js"></script>
+@endpush
+

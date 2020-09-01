@@ -141,20 +141,31 @@
         <div class="container pb-70">
             <div class="section-content">
                 @if ($services->count())
-                    @foreach ($services as $service)
+                    @foreach ($services as $key => $service)
                     <div class="row pb-5">
                         <div class="col-xs-12 col-sm-12 col-md-12 pull-left flip">
                             <div class="row">
-                                <div class="col-md-12">
-                                    <img alt="{{$service->title}}" src="storage/{{PAGE.$service->image}}" style="width: 100%;border: 5px solid #1bacd6;
+                                @if (($key/2) == 0)
+                                <div class="col-md-5">
+                                    <img alt="{{$service->title}}"  class="lazyload" src="svg/spinner.svg" data-src="storage/{{PAGE.$service->image}}" style="width: 100%;border: 5px solid #1bacd6;
                                     box-shadow: 0px 3px 7px rgba(0,0,0,0.5);">
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h3 class="mt-20 mb-10">{{$service->title}}</h3>
+                                <div class="col-md-7">
+                                    <h3 class="mb-10">{{$service->title}}</h3>
                                     <p>{{$service->description}}</p>
                                 </div>
+                                @else
+                                
+                                <div class="col-md-7">
+                                    <h3 class="mb-10">{{$service->title}}</h3>
+                                    <p>{{$service->description}}</p>
+                                </div>
+                                <div class="col-md-5">
+                                    <img alt="{{$service->title}}"  class="lazyload" src="svg/spinner.svg" data-src="storage/{{PAGE.$service->image}}" style="width: 100%;border: 5px solid #1bacd6;
+                                    box-shadow: 0px 3px 7px rgba(0,0,0,0.5);">
+                                </div>
+                                @endif
+                                
                             </div>
                         </div>
                     </div>
@@ -170,64 +181,67 @@
 @endsection
 
 @push('script')
+<script type="text/javascript" src="js/frontend/lazysizes.min.js"></script>
  <script src="js/backend/bootstrap-select.js" type="text/javascript"></script>
  <script type="text/javascript">
     var _token = "{{csrf_token()}}";
-    $(document).on('change','#phone_id', function(){
-        let phone_id = $("#phone_id").val();
-        if(phone_id){
-            $(".error").each(function () {
-                $(this).empty();//remove error text
-            });
-            $("#searchDataForm").find('.is-invalid').removeClass('is-invalid');
-        }else{
-            $("#phone_id").parent().addClass('is-invalid');
-            $("#phone_id").parent().after('<div class="error invalid-feedback"><i class="icon fas fa-question-circle"></i> Please choose a phone</div>');
-        }       
-    });
-    $(document).on('click','#search-btn', function(){
-        let brand_id = $("#brand_id").val();
-        let phone_id = $("#phone_id").val();
-        if(brand_id){
-            $(".error").each(function () {
-                    $(this).empty();//remove error text
-                });
-                $("#searchDataForm").find('.is-invalid').removeClass('is-invalid');
+    $(document).ready(function(){
+        $(document).on('change','#phone_id', function(){
+            let phone_id = $("#phone_id").val();
             if(phone_id){
                 $(".error").each(function () {
                     $(this).empty();//remove error text
                 });
                 $("#searchDataForm").find('.is-invalid').removeClass('is-invalid');
-                $.ajax({
-                    url: "{{route('phone.services')}}",
-                    type: "POST",
-                    data:{phone_id:phone_id,_token:_token},
-                    dataType: "JSON",
-                    beforeSend: function () {
-                        $('#search-btn').addClass('kt-spinner kt-spinner--md kt-spinner--light');
-                    },
-                    complete: function () {
-                        $('#search-btn').removeClass('kt-spinner kt-spinner--md kt-spinner--light');
-                    },
-                    success: function (data) {
-                        $('.service-modal-section').removeClass('d-none');
-                        $('.service-modal-section .card-body').html('');
-                        $('.service-modal-section .card-body').html(data);
-                        $('.selectpicker').val('').selectpicker('refresh');
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                    }
-                });
             }else{
                 $("#phone_id").parent().addClass('is-invalid');
                 $("#phone_id").parent().after('<div class="error invalid-feedback"><i class="icon fas fa-question-circle"></i> Please choose a phone</div>');
+            }       
+        });
+        $(document).on('click','#search-btn', function(){
+            let brand_id = $("#brand_id").val();
+            let phone_id = $("#phone_id").val();
+            if(brand_id){
+                $(".error").each(function () {
+                        $(this).empty();//remove error text
+                    });
+                    $("#searchDataForm").find('.is-invalid').removeClass('is-invalid');
+                if(phone_id){
+                    $(".error").each(function () {
+                        $(this).empty();//remove error text
+                    });
+                    $("#searchDataForm").find('.is-invalid').removeClass('is-invalid');
+                    $.ajax({
+                        url: "{{route('phone.services')}}",
+                        type: "POST",
+                        data:{phone_id:phone_id,_token:_token},
+                        dataType: "JSON",
+                        beforeSend: function () {
+                            $('#search-btn').addClass('kt-spinner kt-spinner--md kt-spinner--light');
+                        },
+                        complete: function () {
+                            $('#search-btn').removeClass('kt-spinner kt-spinner--md kt-spinner--light');
+                        },
+                        success: function (data) {
+                            $('.service-modal-section').removeClass('d-none');
+                            $('.service-modal-section .card-body').html('');
+                            $('.service-modal-section .card-body').html(data);
+                            $('.selectpicker').val('').selectpicker('refresh');
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                        }
+                    });
+                }else{
+                    $("#phone_id").parent().addClass('is-invalid');
+                    $("#phone_id").parent().after('<div class="error invalid-feedback"><i class="icon fas fa-question-circle"></i> Please choose a phone</div>');
+                }
+            }else{
+                $("#brand_id").parent().addClass('is-invalid');
+                $("#brand_id").parent().after('<div class="error invalid-feedback"><i class="icon fas fa-question-circle"></i> Please choose a brand</div>');
             }
-        }else{
-            $("#brand_id").parent().addClass('is-invalid');
-            $("#brand_id").parent().after('<div class="error invalid-feedback"><i class="icon fas fa-question-circle"></i> Please choose a brand</div>');
-        }
-        
+            
+        });
     });
     function getPhoneList(brand_id){
         if(brand_id){

@@ -27,7 +27,7 @@
                     <div class="services-block mb-50">
                         <div class="inner-box">
                             <div class="thumb">
-                                <img src="storage/{{SERVICE.$service->image}}" alt="{{$service->service_name}}" style="height: 300px;" />
+                                <img  class="lazyload" src="svg/spinner.svg" data-src="storage/{{SERVICE.$service->image}}" alt="{{$service->service_name}}" style="height: 300px;" />
                             </div>
                             <div class="content">
                                 <h4><a href="javascript:void(0);">{{$service->service_name}}</a></h4>

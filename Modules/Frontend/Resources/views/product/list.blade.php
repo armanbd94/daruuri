@@ -13,13 +13,13 @@
         <b>Showing {{$products->firstItem()}} to {{$products->lastItem()}} of {{$products->total()}} result</b>
     </div>
     @foreach ($products as $product)
-        <div class="col-md-4">
+        <div class="col-sm-6 col-md-4">
             <div class="product-card">
                 <div class="img-box">
                     @if (!empty($product->product_image))
-                    <img src="storage/{{PRODUCT.$product->product_image}}" alt="{{$product->product_name}}">
+                    <img  class="lazyload" src="svg/spinner.svg" data-src="storage/{{PRODUCT.$product->product_image}}" alt="{{$product->product_name}}">
                     @else 
-                    <img src="svg/no-phone.svg" alt="{{$product->product_name}}">
+                    <img  class="lazyload" src="svg/spinner.svg" data-src="svg/no-phone.svg" alt="{{$product->product_name}}">
                     @endif
                 </div>
                 <div class="content">

@@ -1,7 +1,51 @@
 <section id="home" class="">
     <div class="container-fluid p-0">
         <div class="row">
+
             <div class="col">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        @if ($data['sliders']->count())
+                                @foreach ($data['sliders'] as $key => $item)
+                      <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active': '' }}"></li>
+                      {{-- <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li> --}}
+                      @endforeach
+                      @endif
+                    </ol>
+                    <div class="carousel-inner">
+                        @if ($data['sliders']->count())
+                                @foreach ($data['sliders'] as $key => $item)
+                      <div class="carousel-item {{ $key == 0 ? 'active': '' }}" data-pause="hover">
+                        <img class="d-block w-100" src="storage/{{SLIDER.$item->image}}" alt="{{$item->title}}">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5 class="caption-title">{{$item->title}}</h5>
+                            <p class="caption-subtitle"> {{$item->sub_title}}</p>
+                            <a href="{{url('/'.$item->button_link) ?? url('/')}}" class="btn btn-theme-colored1 btn-round btn-sm">Read More</a>
+                          </div>
+                      </div>
+                      @endforeach
+                      @endif
+                      {{-- <div class="carousel-item">
+                        <img class="d-block w-100" src="..." alt="Second slide">
+                      </div>
+                      <div class="carousel-item">
+                        <img class="d-block w-100" src="..." alt="Third slide">
+                      </div> --}}
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </div>
+            </div>
+
+
+            {{-- <div class="col">
                 <!-- START Home Slider REVOLUTION SLIDER 6.0.8 -->
                 <p class="rs-p-wp-fix"></p>
                 <rs-module-wrap id="rev_slider_1_1_wrapper" data-alias="home-slider" data-source="gallery"
@@ -27,7 +71,7 @@
                                     data-frame_1_chars="e:Power4.easeInOut;dir:middletoedge;d:10;"
                                     data-frame_999="y:0;o:0;rX:70deg;oZ:-50;e:Power4.easeInOut;st:w;sp:1750;"
                                     data-frame_999_chars="e:Power4.easeInOut;dir:middletoedge;d:10;y:cyc(-100||100);o:0;"
-                                    style="z-index:13;background-color:rgba(0,0,0,0.3);font-family:Poppins;">
+                                    style="z-index:13;background-color:rgba(0,0,0,0.3);font-family:'Roboto', sans-serif !important;">
                                     {{$item->title}}
                                 </rs-layer>
 
@@ -38,7 +82,7 @@
                                     data-dim="w:724px,644px,653px,476px;" data-frame_0="x:-50,-38,-28,-17;"
                                     data-frame_1="st:1700;sp:1000;"
                                     data-frame_999="x:-50,-38,-28,-17;o:0;st:w;sp:1000;"
-                                    style="z-index:12;font-family:Poppins;">{{$item->sub_title}}
+                                    style="z-index:12;font-family:'Roboto', sans-serif !important;">{{$item->sub_title}}
                                 </rs-layer>
 
                                 <a href="{{url('/'.$item->button_link) ?? url('/')}}"><rs-layer id="slider-1-slide-{{$key+1}}-layer-20" class="rev-btn rs-pxl-1" data-type="button"
@@ -68,7 +112,7 @@
                     </rs-module>
                 </rs-module-wrap>
                 <!-- END REVOLUTION SLIDER -->
-            </div>
+            </div> --}}
         </div>
     </div>
 </section>

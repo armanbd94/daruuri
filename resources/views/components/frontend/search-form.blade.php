@@ -22,7 +22,7 @@
                 </div>
                 <div class="form-group col-md-2">
                     <button type="button"
-                        class="wpcf7-form-control wpcf7-submit btn btn-theme-colored1 btn-round" id="search-btn">Go for it <i class="fas fa-arrow-circle-right"></i></button>
+                        class="wpcf7-form-control wpcf7-submit btn btn-theme-colored1 btn-round" id="search-btn"><i class="fas fa-search"></i> Search</button>
                 </div>
             </div>
         </form>

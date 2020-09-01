@@ -32,29 +32,32 @@
                             Contact</h4>
                         <div class="tm-widget tm-widget-blog-list ">
                             <!-- the loop -->
-                            <article class="post media-post clearfix"> <a class="post-thumb" href="#"><img
-                                        style="width: 70%;" src="images/icon/mail.svg" class="" alt="" /></a>
+                            <article class="post media-post clearfix"> 
+                                {{-- <a class="post-thumb" href="#"><img
+                                        style="width: 70%;" src="images/icon/mail.svg" class="" alt="" /></a> --}}
                                 <div class="post-right">
-                                    <h6 class="post-title"> <a href="#">Email </a> </h6>
+                                    <h6 class="post-title"> <a href="javascript::void(0);">Email </a> </h6>
                                     <span class="post-date">
                                         <time class="entry-date">{{ config('settings.email_address') }}</time>
                                     </span>
                                 </div>
                             </article>
-                            <article class="post media-post clearfix"> <a class="post-thumb" href="#"><img
+                            <article class="post media-post clearfix"> 
+                                {{-- <a class="post-thumb" href="#"><img
                                         style="width: 70%;" src="images/icon/smartphone.svg" class=""
-                                        alt="" /></a>
+                                        alt="" /></a> --}}
                                 <div class="post-right">
-                                    <h6 class="post-title"> <a href="#"> Phone </a> </h6>
+                                    <h6 class="post-title"> <a href="javascript::void(0);"> Phone </a> </h6>
                                     <span class="post-date">
                                         <time class="entry-date">{{ config('settings.contact_number') }}</time>
                                     </span>
                                 </div>
                             </article>
-                            <article class="post media-post clearfix"> <a class="post-thumb" href="#"><img
-                                        style="width: 70%;" src="images/icon/address.svg" class="" alt="" /></a>
+                            <article class="post media-post clearfix"> 
+                                {{-- <a class="post-thumb" href="#"><img
+                                        style="width: 70%;" src="images/icon/address.svg" class="" alt="" /></a> --}}
                                 <div class="post-right">
-                                    <h6 class="post-title"> <a href="#"> Address </a> </h6>
+                                    <h6 class="post-title"> <a href="javascript::void(0);"> Address </a> </h6>
                                     <span class="post-date">
                                         <time class="entry-date">{{ config('settings.contact_address') }}</time>
                                     </span>

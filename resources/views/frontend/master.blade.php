@@ -78,6 +78,9 @@
             height: auto !important;
             padding: 0px !important;
         }
+        .carousel-item img{
+          height: 700px !important;
+        }
 
     }
     .header-nav .header-nav-col-row> :first-child {
@@ -99,6 +102,11 @@
     @media only screen and (max-width: 767px){
       .footer-paragraph{
         text-align: center !important;
+      }
+    }
+    @media only screen and (max-width: 575px){
+      .product-card{
+        height: auto !important;
       }
     }
     @media only screen and (max-width: 1199.99px){
@@ -132,14 +140,12 @@
         <a class="scrollToTop" href="javascript:void(0);"><i class="fa fa-angle-up"></i></a>
     </div>
      <!-- external javascripts -->
-     <script src="js/frontend/jquery.js"></script>
      <script src="js/backend/popper.js"></script>
+     <script src="js/frontend/jquery.js"></script>
+     
     <script src="js/frontend/bootstrap.min.js"></script>
-
      <script src="js/frontend/javascript-plugins-bundle.js"></script>
      <script src="js/frontend/menuzord.js"></script>
-     <!-- JS | Custom script for all pages -->
-     <script src="js/frontend/custom.js"></script>
      @stack('script')
      <script>
         var $window = $(window);
@@ -151,6 +157,8 @@
             });
         });
      </script>
+      <!-- JS | Custom script for all pages -->
+      <script src="js/frontend/custom.js"></script>
 </body>
 
 </html>

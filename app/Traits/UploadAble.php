@@ -29,7 +29,7 @@ trait UploadAble
         $filename        = pathinfo($filenameWithExt, PATHINFO_FILENAME); // Get just filename  like index          
         $extension       = $file->getClientOriginalExtension(); // Get just extension like .jpg
 
-        $fileNameToStore = !is_null($file_name) ? $file_name.'.'.$extension : $filename.uniqid().'.'.$extension; //Filename to store  like index1545gfh5465.jpg                
+        $fileNameToStore = !is_null($file_name) ? $file_name.'.'.$extension : str_replace(' ', '-', $filename).'-'.rand(111111,999999).'.'.$extension; //Filename to store  like index1545gfh5465.jpg                
         $file->storeAs($folder,$fileNameToStore,$disk); //store file in targetted folder 
         return $fileNameToStore;
     }
